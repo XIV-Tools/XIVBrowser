@@ -1,0 +1,6 @@
+[submodule "Lib/WpfMv"]
+	path = Lib/WpfMv
+	url = https://github.com/XIV-Tools/Wpf.Mv
+[submodule "Lib/LuminaExtensions"]
+	path = Lib/LuminaExtensions
+	url = https://github.com/XIV-Tools/LuminaExtensions
