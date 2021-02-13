@@ -6,7 +6,7 @@
 	xmlns:local="clr-namespace:XIVBrowser"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:views="clr-namespace:XIVBrowser.Views"
-	Title="MainWindow"
+	Title="XIV Browser"
 	Width="800"
 	Height="450"
 	mc:Ignorable="d">
