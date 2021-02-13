@@ -12,7 +12,18 @@
 	mc:Ignorable="d">
 	<Grid x:Name="ContentArea">
 
-		<TabControl>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition />
+		</Grid.RowDefinitions>
+
+		<Menu Grid.Row="0">
+			<MenuItem Header="Tools">
+				<MenuItem Click="OnFileScannerMenuClicked" Header="File Scanner" />
+			</MenuItem>
+		</Menu>
+
+		<TabControl Grid.Row="1">
 			<TabItem Header="Items">
 				<Grid>
 					<Grid.ColumnDefinitions>

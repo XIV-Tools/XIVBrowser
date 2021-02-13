@@ -13,6 +13,7 @@ namespace XIVBrowser
 		protected override void OnStartup(StartupEventArgs e)
 		{
 			LogService.Create();
+			FileService.Load();
 
 			base.OnStartup(e);
 		}

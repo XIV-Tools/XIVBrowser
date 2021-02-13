@@ -20,5 +20,10 @@ namespace XIVBrowser
 		{
 			this.ItemView.SetItem(item);
 		}
+
+		private void OnFileScannerMenuClicked(object sender, RoutedEventArgs e)
+		{
+			new FileScanWindow().ShowDialog();
+		}
 	}
 }

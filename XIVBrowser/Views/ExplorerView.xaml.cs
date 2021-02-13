@@ -5,7 +5,6 @@ namespace XIVBrowser.Views
 {
 	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
-	using System.Windows;
 	using Wpf.Mv;
 
 	/// <summary>
@@ -16,6 +15,8 @@ namespace XIVBrowser.Views
 		public ExplorerView()
 		{
 			this.InitializeComponent();
+
+			this.Refresh();
 		}
 
 		public ObservableCollection<FileService.SqFileInfo> Files
@@ -36,28 +37,20 @@ namespace XIVBrowser.Views
 			set => this.SetValue(value);
 		}
 
-		private void OnScanClicked(object sender, RoutedEventArgs e)
+		public void Refresh()
 		{
-			FileScanWindow window = new FileScanWindow();
-			window.Show();
-		}
-
-		/*public async void Refresh()
-		{
-			await FileService.ScanAsync(false, p);
-
 			ObservableCollection<FileService.SqFileInfo> collection = new ObservableCollection<FileService.SqFileInfo>();
-			foreach (KeyValuePair<ulong, FileService.SqFileInfo> keyVal in FileService.FileLookup)
+			foreach (FileService.SqFileInfo file in FileService.FileLookupPath.Values)
 			{
-				if (keyVal.Value.Path == null)
+				if (file.Path == null)
 					continue;
 
-				collection.Add(keyVal.Value);
+				collection.Add(file);
 			}
 
 			this.Files = collection;
 			this.FilesWithPaths = this.Files.Count;
-			this.TotalFiles = FileService.FileLookup.Count;
-		}*/
+			this.TotalFiles = FileService.FileLookupHash.Count;
+		}
 	}
 }

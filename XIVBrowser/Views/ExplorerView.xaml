@@ -10,14 +10,11 @@
 	mc:Ignorable="d">
 	<Grid>
 		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" />
 			<RowDefinition />
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 
-		<Button Click="OnScanClicked" Content="Scan..." />
-
-		<ListBox Grid.Row="1" ItemsSource="{Binding Files}">
+		<ListBox Grid.Row="0" ItemsSource="{Binding Files}">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
 					<Grid>
@@ -27,7 +24,7 @@
 			</ListBox.ItemTemplate>
 		</ListBox>
 
-		<TextBlock Grid.Row="2" Margin="3">
+		<TextBlock Grid.Row="1" Margin="3">
 			<TextBlock.Text>
 				<MultiBinding StringFormat="{}{0} of {1} files">
 					<Binding Path="FilesWithPaths" />

@@ -5,18 +5,79 @@ namespace XIVBrowser
 {
 	using System;
 	using System.Collections.Generic;
-	using System.Diagnostics;
 	using System.IO;
-	using System.Threading.Tasks;
 	using Lumina.Data;
 	using Lumina.Data.Structs;
-	using Lumina.Misc;
 	using Newtonsoft.Json;
 	using Serilog;
 	using XIVBrowser.Services;
 
 	public static class FileService
 	{
+		public static readonly Dictionary<ulong, SqFileInfo> FileLookupHash = new Dictionary<ulong, SqFileInfo>();
+		public static readonly Dictionary<string, SqFileInfo> FileLookupPath = new Dictionary<string, SqFileInfo>();
+
+		public static void Load()
+		{
+			// Get every file in the entire game (as hash -> SqFileInfo)
+			foreach (KeyValuePair<string, Repository> repo in LuminaService.Lumina.Repositories)
+			{
+				foreach (KeyValuePair<byte, List<Category>> category in repo.Value.Categories)
+				{
+					foreach (Category cat2 in category.Value)
+					{
+						if (cat2.IndexHashTableEntries != null)
+						{
+							foreach (KeyValuePair<ulong, IndexHashTableEntry> hashEntry in cat2.IndexHashTableEntries)
+							{
+								SqPack packFile = cat2.DatFiles[hashEntry.Value.DataFileId];
+								FileLookupHash.Add(hashEntry.Value.hash, new FileService.SqFileInfo(packFile, hashEntry.Value.Offset));
+							}
+						}
+
+						if (cat2.Index2HashTableEntries != null)
+						{
+							foreach (KeyValuePair<uint, Index2HashTableEntry> hashEntry in cat2.Index2HashTableEntries)
+							{
+								SqPack packFile = cat2.DatFiles[hashEntry.Value.DataFileId];
+								FileLookupHash.Add(hashEntry.Value.hash, new FileService.SqFileInfo(packFile, hashEntry.Value.Offset));
+							}
+						}
+					}
+				}
+			}
+
+			LoadPaths(new FileInfo("Data/AccessoryPaths.json"));
+			LoadPaths(new FileInfo("Data/EquipmentPaths.json"));
+			LoadPaths(new FileInfo("Data/HousingPaths.json"));
+			LoadPaths(new FileInfo("Data/WeaponPaths.json"));
+
+			Log.Information($"Loaded {FileLookupPath.Count} file paths out of {FileLookupHash.Count} files.");
+		}
+
+		private static void LoadPaths(FileInfo file)
+		{
+			string json = File.ReadAllText(file.FullName);
+			List<string> paths = JsonConvert.DeserializeObject<List<string>>(json);
+			foreach (string path in paths)
+			{
+				if (string.IsNullOrEmpty(path))
+					continue;
+
+				SqFileInfo fileInfo;
+				ulong hash = LuminaService.GetFileHash(path);
+				if (FileLookupHash.TryGetValue(hash, out fileInfo))
+				{
+					fileInfo.SetPath(path);
+					FileLookupPath.Add(path, fileInfo);
+				}
+				else
+				{
+					throw new Exception($"Invalid path in paths data: \"{path}\". Hash not found: \"{hash}\"");
+				}
+			}
+		}
+
 		public class SqFileInfo
 		{
 			public readonly SqPack Pack;
