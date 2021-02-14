@@ -64,7 +64,7 @@ namespace XIVBrowser
 				if (string.IsNullOrEmpty(path))
 					continue;
 
-				SqFileInfo fileInfo;
+				SqFileInfo? fileInfo;
 				ulong hash = LuminaService.GetFileHash(path);
 				if (FileLookupHash.TryGetValue(hash, out fileInfo))
 				{
@@ -91,7 +91,7 @@ namespace XIVBrowser
 				this.Offset = offset;
 			}
 
-			public string Path { get; private set; }
+			public string? Path { get; private set; }
 
 			public FileType Type => this.FileInfo.Type;
 

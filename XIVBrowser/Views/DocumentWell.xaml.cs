@@ -5,7 +5,7 @@ namespace XIVBrowser.Views
 {
 	using System.Windows;
 	using Dragablz;
-	using Wpf.Mv;
+	using XivToolsWpf.ModelView;
 
 	/// <summary>
 	/// Interaction logic for DocumentWell.xaml.

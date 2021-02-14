@@ -4,7 +4,6 @@
 namespace XIVBrowser
 {
 	using System.Windows;
-	using LuminaExtensions.Excel;
 
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml.

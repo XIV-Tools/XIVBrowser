@@ -10,8 +10,8 @@ namespace XIVBrowser.Views
 	using Lumina.Excel.GeneratedSheets;
 	using LuminaExtensions;
 	using LuminaExtensions.Excel;
-	using Wpf.Mv;
 	using XIVBrowser.Services;
+	using XivToolsWpf.ModelView;
 
 	/// <summary>
 	/// Interaction logic for ItemsView.xaml.
@@ -25,11 +25,11 @@ namespace XIVBrowser.Views
 
 		public delegate void SelectionChangedDelegate(ItemViewModel item);
 
-		public event SelectionChangedDelegate SelectedItemChanged;
+		public event SelectionChangedDelegate? SelectedItemChanged;
 
-		public ObservableCollection<TreeEntry> Items
+		public ObservableCollection<TreeEntry>? Items
 		{
-			get => (ObservableCollection<TreeEntry>)this.GetValue();
+			get => this.GetValue<ObservableCollection<TreeEntry>?>();
 			set => this.SetValue(value);
 		}
 
@@ -44,7 +44,7 @@ namespace XIVBrowser.Views
 				if (item.ModelBase == 0 && item.SubModelBase == 0)
 					continue;
 
-				TreeEntry category;
+				TreeEntry? category;
 				if (!categoryLookup.TryGetValue(item.FitsInSlots, out category))
 				{
 					category = new TreeEntry();
@@ -92,13 +92,13 @@ namespace XIVBrowser.Views
 
 			public List<TreeEntry> Children
 			{
-				get => (List<TreeEntry>)this.GetValue();
+				get => this.GetValue<List<TreeEntry>>();
 				set => this.SetValue(value);
 			}
 
-			public string Name
+			public string? Name
 			{
-				get => (string)this.GetValue();
+				get => this.GetValue<string?>();
 				set => this.SetValue(value);
 			}
 		}

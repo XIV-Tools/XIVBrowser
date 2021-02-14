@@ -5,7 +5,7 @@ namespace XIVBrowser.Views
 {
 	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
-	using Wpf.Mv;
+	using XivToolsWpf.ModelView;
 
 	/// <summary>
 	/// Interaction logic for ExplorerView.xaml.
@@ -19,21 +19,21 @@ namespace XIVBrowser.Views
 			this.Refresh();
 		}
 
-		public ObservableCollection<FileService.SqFileInfo> Files
+		public ObservableCollection<FileService.SqFileInfo>? Files
 		{
-			get => (ObservableCollection<FileService.SqFileInfo>)this.GetValue();
+			get => this.GetValue<ObservableCollection<FileService.SqFileInfo>?>();
 			set => this.SetValue(value);
 		}
 
 		public int FilesWithPaths
 		{
-			get => (int)this.GetValue();
+			get => this.GetValue<int>();
 			set => this.SetValue(value);
 		}
 
 		public int TotalFiles
 		{
-			get => (int)this.GetValue();
+			get => this.GetValue<int>();
 			set => this.SetValue(value);
 		}
 

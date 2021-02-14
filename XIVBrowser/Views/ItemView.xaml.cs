@@ -6,8 +6,8 @@ namespace XIVBrowser.Views
 	using System;
 	using Lumina.Data.Files;
 	using LuminaExtensions.Excel;
-	using Wpf.Mv;
 	using XIVBrowser.Services;
+	using XivToolsWpf.ModelView;
 
 	/// <summary>
 	/// Interaction logic for ItemView.xaml.
@@ -19,15 +19,15 @@ namespace XIVBrowser.Views
 			this.InitializeComponent();
 		}
 
-		public string FilePath
+		public string? FilePath
 		{
-			get => (string)this.GetValue();
+			get => this.GetValue<string?>();
 			set => this.SetValue(value);
 		}
 
-		public ItemViewModel Item
+		public ItemViewModel? Item
 		{
-			get => (ItemViewModel)this.GetValue();
+			get => this.GetValue<ItemViewModel?>();
 			set => this.SetValue(value);
 		}
 
@@ -42,6 +42,9 @@ namespace XIVBrowser.Views
 
 		private string GetDirectory()
 		{
+			if (this.Item == null)
+				throw new Exception("No Item in item view");
+
 			ushort primaryId = this.Item.ModelBase;
 			string primaryIdStr4 = primaryId.ToString().PadLeft(4, '0');
 			string primaryIdStr6 = primaryId.ToString().PadLeft(6, '0');
@@ -76,6 +79,9 @@ namespace XIVBrowser.Views
 
 		private string GetImcDirectory()
 		{
+			if (this.Item == null)
+				throw new Exception("No Item in item view");
+
 			ushort primaryId = this.Item.ModelBase;
 			string primaryIdStr4 = primaryId.ToString().PadLeft(4, '0');
 			string primaryIdStr6 = primaryId.ToString().PadLeft(6, '0');

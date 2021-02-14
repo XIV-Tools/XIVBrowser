@@ -15,24 +15,25 @@ namespace XIVBrowser
 	using Lumina.Misc;
 	using Newtonsoft.Json;
 	using Serilog;
-	using Wpf.Mv;
 	using XIVBrowser.Services;
+	using XivToolsWpf.ModelView;
 
 	/// <summary>
 	/// Interaction logic for FileScanWindow.xaml.
 	/// </summary>
 	public partial class FileScanWindow : Window
 	{
+		private readonly Scan scan = new Scan();
+
 		public FileScanWindow()
 		{
-			this.DataContext = new Scan();
+			this.DataContext = this.scan;
 			this.InitializeComponent();
 		}
 
 		private void OnScanClicked(object sender, RoutedEventArgs e)
 		{
-			Scan scan = this.DataContext as Scan;
-			Task.Run(() => scan.Run());
+			Task.Run(() => this.scan.Run());
 		}
 
 		public class Scan : Bindable
@@ -52,19 +53,19 @@ namespace XIVBrowser
 
 			public double Maximum
 			{
-				get => (double)this.GetValue();
+				get => this.GetValue<double>();
 				set => this.SetValue(value);
 			}
 
 			public double Current
 			{
-				get => (double)this.GetValue();
+				get => this.GetValue<double>();
 				set => this.SetValue(value);
 			}
 
 			public string Status
 			{
-				get => (string)this.GetValue();
+				get => this.GetValue<string>();
 				set => this.SetValue(value);
 			}
 
@@ -373,7 +374,7 @@ namespace XIVBrowser
 			[MethodImpl(MethodImplOptions.AggressiveInlining)]
 			private bool CheckPath(string path, ref HashSet<string> paths)
 			{
-				FileService.SqFileInfo fileInfo;
+				FileService.SqFileInfo? fileInfo;
 
 				ulong hash = LuminaService.GetFileHash(path);
 				if (this.FileLookup.TryGetValue(hash, out fileInfo))

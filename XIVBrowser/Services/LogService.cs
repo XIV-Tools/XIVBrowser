@@ -24,14 +24,23 @@ namespace XIVBrowser
 			MinimumLevel = LogEventLevel.Verbose,
 		};
 
+		static LogService()
+		{
+			string? str = null;
+			ProcessModule? module = Process.GetCurrentProcess().MainModule;
+
+			if (module != null)
+				str = Path.GetDirectoryName(module.FileName);
+
+			LogDirectory = str ?? "C:/";
+		}
+
 		public static void Create()
 		{
 			AppDomain.CurrentDomain.UnhandledException += OnCurrentDomainUnhandledException;
 			Application.Current.Dispatcher.UnhandledException += (s, e) => Log.Fatal(e.Exception, e.Exception.Message);
 			Application.Current.DispatcherUnhandledException += (s, e) => Log.Fatal(e.Exception, e.Exception.Message);
 			TaskScheduler.UnobservedTaskException += (s, e) => Log.Fatal(e.Exception, e.Exception.Message);
-
-			LogDirectory = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
 
 			LoggerConfiguration config = new LoggerConfiguration();
 			config.MinimumLevel.ControlledBy(LogLevel);
@@ -49,7 +58,7 @@ namespace XIVBrowser
 
 		private static void OnCurrentDomainUnhandledException(object sender, UnhandledExceptionEventArgs e)
 		{
-			Exception ex = e.ExceptionObject as Exception;
+			Exception? ex = e.ExceptionObject as Exception;
 
 			if (ex == null)
 				return;
