@@ -1,3 +1,6 @@
 [submodule "Lib/LuminaExtensions"]
 	path = Lib/LuminaExtensions
 	url = https://github.com/XIV-Tools/LuminaExtensions
+[submodule "Lib/XivToolsWpf"]
+	path = Lib/XivToolsWpf
+	url = https://github.com/XIV-Tools/XivToolsWpf
