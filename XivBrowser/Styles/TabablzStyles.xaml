@@ -109,18 +109,13 @@
 																		VerticalContentAlignment="Stretch"
 																		Style="{StaticResource MaterialDesignInvisibleThumbStyle}" />
 																	<Button
+																		x:Name="CloseButton"
 																		Grid.Column="1"
+																		Margin="2,0,6,0"
 																		Command="{x:Static dragablz:TabablzControl.CloseItemCommand}"
 																		CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
-																		Style="{StaticResource MaterialDesignCloseItemCommandButtonStyle}">
-																		<Button.Visibility>
-																			<MultiBinding Converter="{StaticResource ShowDefaultCloseButtonConverter}">
-																				<Binding Path="ShowDefaultCloseButton" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type dragablz:TabablzControl}}" />
-																				<Binding Path="FixedHeaderCount" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type dragablz:TabablzControl}}" />
-																				<Binding Path="LogicalIndex" RelativeSource="{RelativeSource TemplatedParent}" />
-																			</MultiBinding>
-																		</Button.Visibility>
-																	</Button>
+																		Style="{StaticResource MaterialDesignCloseItemCommandButtonStyle}"
+																		Visibility="Collapsed" />
 																</Grid>
 															</themes:Ripple>
 														</Border>
@@ -130,6 +125,7 @@
 															<Setter TargetName="contentPresenter" Property="Opacity" Value="1" />
 															<Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource PrimaryHueMidBrush}" />
 															<Setter TargetName="Border" Property="Background" Value="{DynamicResource MaterialDesignBackground}" />
+															<Setter TargetName="CloseButton" Property="Visibility" Value="Visible" />
 														</Trigger>
 
 

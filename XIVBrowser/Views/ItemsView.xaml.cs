@@ -10,6 +10,7 @@ namespace XIVBrowser.Views
 	using Lumina.Excel.GeneratedSheets;
 	using LuminaExtensions;
 	using LuminaExtensions.Excel;
+	using XivBrowser;
 	using XIVBrowser.Services;
 	using XivToolsWpf.ModelView;
 
@@ -22,10 +23,6 @@ namespace XIVBrowser.Views
 		{
 			this.InitializeComponent();
 		}
-
-		public delegate void SelectionChangedDelegate(ItemViewModel item);
-
-		public event SelectionChangedDelegate? SelectedItemChanged;
 
 		public ObservableCollection<TreeEntry>? Items
 		{
@@ -63,11 +60,11 @@ namespace XIVBrowser.Views
 			this.Refresh();
 		}
 
-		private void OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+		private void TreeView_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
-			if (e.NewValue is ItemTreeEntry itemTree)
+			if (this.ItemTree.SelectedItem is ItemTreeEntry itemTree)
 			{
-				this.SelectedItemChanged?.Invoke(itemTree.Item);
+				DocumentWell.Open(new Document(itemTree.Item.Name, itemTree.Item));
 			}
 		}
 

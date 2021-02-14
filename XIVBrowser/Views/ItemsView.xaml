@@ -17,10 +17,11 @@
 		</Grid.RowDefinitions>
 
 		<TreeView
+			x:Name="ItemTree"
 			Grid.Row="0"
 			BorderThickness="0"
 			ItemsSource="{Binding Items}"
-			SelectedItemChanged="OnSelectedItemChanged"
+			MouseDoubleClick="TreeView_MouseDoubleClick"
 			VirtualizingStackPanel.IsVirtualizing="True">
 			<TreeView.ItemTemplate>
 				<HierarchicalDataTemplate ItemsSource="{Binding Children}">

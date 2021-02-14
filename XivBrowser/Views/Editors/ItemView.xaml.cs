@@ -7,11 +7,10 @@ namespace XIVBrowser.Views
 	using Lumina.Data.Files;
 	using LuminaExtensions.Excel;
 	using XIVBrowser.Services;
+	using XivBrowser.Views.Editors;
 	using XivToolsWpf.ModelView;
 
-	/// <summary>
-	/// Interaction logic for ItemView.xaml.
-	/// </summary>
+	[DocumentEditor(typeof(ItemViewModel))]
 	public partial class ItemView : View
 	{
 		public ItemView()

@@ -7,8 +7,6 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:mv="clr-namespace:XivToolsWpf.ModelView;assembly=XivToolsWpf"
 	xmlns:views="clr-namespace:XIVBrowser.Views"
-	Width="800"
-	Height="450"
 	mc:Ignorable="d">
 	<Grid x:Name="ContentArea">
 
@@ -37,7 +35,7 @@
 					<views:ExplorerView />
 				</TabItem>
 			</TabControl>
-			<views:DocumentWell Grid.Column="1" />
+			<views:DocumentWell Grid.Column="1" Margin="0,0,1,1" />
 		</Grid>
 	</Grid>
 </mv:View>

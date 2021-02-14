@@ -13,16 +13,15 @@
 	d:DesignWidth="800"
 	mc:Ignorable="d">
 
-	<dragablz:TabablzControl x:Name="InitialTabablzControl" Margin="0,0,-1,-1">
+	<dragablz:TabablzControl
+		x:Name="InitialTabablzControl"
+		Margin="0,0,-1,-1"
+		ClosingItemCallback="OnTabClosing"
+		ShowDefaultCloseButton="True">
 
 		<dragablz:TabablzControl.InterTabController>
 			<dragablz:InterTabController InterTabClient="{Binding TabClient}" />
 		</dragablz:TabablzControl.InterTabController>
-
-		<TabItem Header="SomeTexture.tex" />
-		<TabItem Header="SomeLongFileNameForAModel.mdl" />
-		<TabItem Header="WhatsDoesThisDo?.atex" />
-		<TabItem Header="MyMat.mtrl" />
 
 	</dragablz:TabablzControl>
 
