@@ -6,6 +6,7 @@ namespace XIVBrowser.Views
 	using System.Windows;
 	using Dragablz;
 	using XivToolsWpf.ModelView;
+	using XivToolsWpf.Windows;
 
 	/// <summary>
 	/// Interaction logic for DocumentWell.xaml.
@@ -30,8 +31,9 @@ namespace XIVBrowser.Views
 
 			INewTabHost<Window> IInterTabClient.GetNewHost(IInterTabClient interTabClient, object partition, TabablzControl source)
 			{
-				TornTabWindow view = new TornTabWindow();
-				return new NewTabHost<Window>(view, view.InitialTabablzControl);
+				StyledWindow window = StyledWindow.Create<TornTabView>();
+				window.OverlapTitleBar = true;
+				return new NewTabHost<Window>(window, ((TornTabView)window.Content).InitialTabablzControl);
 			}
 		}
 	}

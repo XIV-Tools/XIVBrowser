@@ -8,18 +8,21 @@
 	xmlns:local="clr-namespace:XIVBrowser.Views"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:mv="clr-namespace:XivToolsWpf.ModelView;assembly=XivToolsWpf"
+	Margin="0"
 	d:DesignHeight="450"
 	d:DesignWidth="800"
 	mc:Ignorable="d">
 
-	<dragablz:TabablzControl x:Name="InitialTabablzControl" FixedHeaderCount="1">
+	<dragablz:TabablzControl x:Name="InitialTabablzControl" Margin="0,0,-1,-1">
 
 		<dragablz:TabablzControl.InterTabController>
 			<dragablz:InterTabController InterTabClient="{Binding TabClient}" />
 		</dragablz:TabablzControl.InterTabController>
 
-		<TabItem Header="Hello" />
-		<TabItem Header="Hello2" />
+		<TabItem Header="SomeTexture.tex" />
+		<TabItem Header="SomeLongFileNameForAModel.mdl" />
+		<TabItem Header="WhatsDoesThisDo?.atex" />
+		<TabItem Header="MyMat.mtrl" />
 
 	</dragablz:TabablzControl>
 

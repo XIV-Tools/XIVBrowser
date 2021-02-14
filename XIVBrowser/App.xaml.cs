@@ -4,6 +4,7 @@
 namespace XIVBrowser
 {
 	using System.Windows;
+	using XivToolsWpf;
 	using XivToolsWpf.Windows;
 
 	/// <summary>
@@ -13,6 +14,8 @@ namespace XIVBrowser
 	{
 		protected override void OnStartup(StartupEventArgs e)
 		{
+			Themes.Apply(Brightness.Dark, Colors.DeepOrange);
+
 			LogService.Create();
 			FileService.Load();
 
