@@ -18,6 +18,7 @@
 
 		<TreeView
 			Grid.Row="0"
+			BorderThickness="0"
 			ItemsSource="{Binding Items}"
 			SelectedItemChanged="OnSelectedItemChanged"
 			VirtualizingStackPanel.IsVirtualizing="True">

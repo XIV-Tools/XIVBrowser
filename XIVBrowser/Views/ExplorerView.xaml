@@ -14,7 +14,10 @@
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 
-		<ListBox Grid.Row="0" ItemsSource="{Binding Files}">
+		<ListBox
+			Grid.Row="0"
+			BorderThickness="0"
+			ItemsSource="{Binding Files}">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
 					<Grid>

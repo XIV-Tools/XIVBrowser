@@ -23,25 +23,21 @@
 			</MenuItem>
 		</Menu>
 
-		<TabControl Grid.Row="1">
-			<TabItem Header="Items">
-				<Grid>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="256" />
-						<ColumnDefinition />
-					</Grid.ColumnDefinitions>
+		<Grid Grid.Row="1">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="256" />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
 
-					<views:ItemsView Grid.Column="0" SelectedItemChanged="OnSelectedItemChanged" />
-					<views:ItemView x:Name="ItemView" Grid.Column="1" />
-
-				</Grid>
-
-			</TabItem>
-
-			<TabItem Header="Explorer">
-				<views:ExplorerView />
-			</TabItem>
-		</TabControl>
-
+			<TabControl Grid.Row="1">
+				<TabItem Header="Items">
+					<views:ItemsView Grid.Column="0" />
+				</TabItem>
+				<TabItem Header="Explorer">
+					<views:ExplorerView />
+				</TabItem>
+			</TabControl>
+			<views:DocumentWell Grid.Column="1" />
+		</Grid>
 	</Grid>
 </Window>

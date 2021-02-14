@@ -39,6 +39,9 @@
     <DocumentationFile>bin\Release\XIVBrowser.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dragablz, Version=0.0.3.223, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dragablz.0.0.3.223\lib\net45\Dragablz.dll</HintPath>
+    </Reference>
     <Reference Include="FontAwesome.Sharp, Version=5.15.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FontAwesome.Sharp.5.15.3\lib\net48\FontAwesome.Sharp.dll</HintPath>
     </Reference>
@@ -105,6 +108,12 @@
       <DependentUpon>FileScanWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Services\LuminaService.cs" />
+    <Compile Include="TornTabWindow.xaml.cs">
+      <DependentUpon>TornTabWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DocumentWell.xaml.cs">
+      <DependentUpon>DocumentWell.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ExplorerView.xaml.cs">
       <DependentUpon>ExplorerView.xaml</DependentUpon>
     </Compile>
@@ -115,6 +124,14 @@
       <DependentUpon>ItemView.xaml</DependentUpon>
     </Compile>
     <Page Include="FileScanWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TornTabWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DocumentWell.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

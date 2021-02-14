@@ -1,0 +1,27 @@
+﻿<Window
+	x:Class="XIVBrowser.TornTabWindow"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:dockablz="http://dragablz.net/winfx/xaml/dockablz"
+	xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
+	xmlns:local="clr-namespace:XIVBrowser"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:views="clr-namespace:XIVBrowser.Views"
+	Title="TornTabWindow"
+	Width="800"
+	Height="450"
+	AllowsTransparency="True"
+	Background="Transparent"
+	WindowStyle="None"
+	mc:Ignorable="d">
+
+	<dragablz:TabablzControl x:Name="InitialTabablzControl" FixedHeaderCount="1">
+
+		<dragablz:TabablzControl.InterTabController>
+			<dragablz:InterTabController />
+		</dragablz:TabablzControl.InterTabController>
+
+	</dragablz:TabablzControl>
+
+</Window>

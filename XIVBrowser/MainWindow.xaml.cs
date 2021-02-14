@@ -16,11 +16,6 @@ namespace XIVBrowser
 			this.InitializeComponent();
 		}
 
-		private void OnSelectedItemChanged(ItemViewModel item)
-		{
-			this.ItemView.SetItem(item);
-		}
-
 		private void OnFileScannerMenuClicked(object sender, RoutedEventArgs e)
 		{
 			new FileScanWindow().ShowDialog();
