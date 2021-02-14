@@ -12,7 +12,7 @@ namespace XIVBrowser.Views
 	/// </summary>
 	public partial class DocumentWell : View
 	{
-		private InterTabClient tabClient = new InterTabClient();
+		private readonly InterTabClient tabClient = new InterTabClient();
 
 		public DocumentWell()
 		{
