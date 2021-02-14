@@ -4,13 +4,11 @@
 namespace XIVBrowser
 {
 	using System.Windows;
+	using XivToolsWpf.ModelView;
 
-	/// <summary>
-	/// Interaction logic for MainWindow.xaml.
-	/// </summary>
-	public partial class MainWindow : Window
+	public partial class MainView : View
 	{
-		public MainWindow()
+		public MainView()
 		{
 			this.InitializeComponent();
 		}

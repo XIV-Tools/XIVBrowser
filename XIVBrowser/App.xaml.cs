@@ -4,6 +4,7 @@
 namespace XIVBrowser
 {
 	using System.Windows;
+	using XivToolsWpf.Windows;
 
 	/// <summary>
 	/// Interaction logic for App.xaml.
@@ -14,6 +15,8 @@ namespace XIVBrowser
 		{
 			LogService.Create();
 			FileService.Load();
+
+			this.MainWindow = StyledWindow.Show<MainView>();
 
 			base.OnStartup(e);
 		}
