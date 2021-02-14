@@ -78,7 +78,7 @@ namespace XIVBrowser
 			}
 		}
 
-		public class SqFileInfo
+		public record SqFileInfo
 		{
 			public readonly SqPack Pack;
 			public readonly long Offset;
