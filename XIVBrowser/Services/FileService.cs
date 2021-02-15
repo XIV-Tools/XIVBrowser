@@ -55,6 +55,24 @@ namespace XIVBrowser
 			Log.Information($"Loaded {FileLookupPath.Count} file paths out of {FileLookupHash.Count} files.");
 		}
 
+		public static IEnumerable<SqFileInfo> Search(string path)
+		{
+			// TODO: store SqFileInfos in a hierarchal format to make this faster.
+			List<SqFileInfo> results = new List<SqFileInfo>();
+			foreach (SqFileInfo file in FileLookupPath.Values)
+			{
+				if (file.Path == null)
+					continue;
+
+				if (file.Path.StartsWith(path))
+				{
+					results.Add(file);
+				}
+			}
+
+			return results;
+		}
+
 		private static void LoadPaths(FileInfo file)
 		{
 			string json = File.ReadAllText(file.FullName);

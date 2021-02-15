@@ -46,8 +46,15 @@ namespace XIVBrowser.Views
 			TabItem tab = new TabItem();
 			tab.Header = document.Name;
 			tab.Content = view;
-			view.IsEnabled = document.CanEdit;
-			view.DataContext = document.Data;
+
+			if (view is IDocumentEditor documentEditor)
+			{
+				documentEditor.SetDocument(document);
+			}
+			else
+			{
+				view.DataContext = document.Data;
+			}
 
 			instance.InitialTabablzControl.Items.Add(tab);
 			tab.IsSelected = true;
