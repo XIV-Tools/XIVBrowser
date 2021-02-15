@@ -75,18 +75,6 @@
 			<editors:ImcView x:Name="ImcView" />
 		</GroupBox>
 
-		<GroupBox Grid.Row="2" Header="Related Files">
-			<ListBox ItemsSource="{Binding MaterialPaths}">
-				<ListBox.ItemTemplate>
-					<DataTemplate>
-						<Grid>
-							<TextBlock Text="{Binding Path}" />
-						</Grid>
-					</DataTemplate>
-				</ListBox.ItemTemplate>
-			</ListBox>
-		</GroupBox>
-
 
 	</Grid>
 

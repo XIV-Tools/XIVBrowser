@@ -44,10 +44,12 @@ namespace XivBrowser.Views.Editors
 		}
 
 		public ushort VariantCount { get; set; }
+		public bool CanSelectImcData { get; set; } = true;
 		public ItemSlots Slot { get; set; }
 		public ushort Variant { get; set; }
+		public byte MaterialId { get; set; }
 
-		public List<ItemSlots> ValidSlots => new ()
+		public List<ItemSlots> ValidSlots { get; } = new ()
 		{
 			ItemSlots.Head,
 			ItemSlots.Body,
@@ -80,8 +82,14 @@ namespace XivBrowser.Views.Editors
 
 			if (e.PropertyName == nameof(ImcView.Slot) || e.PropertyName == nameof(ImcView.Variant))
 			{
+				if (!this.ValidSlots.Contains(this.Slot))
+				{
+					// Invalid slot for IMC
+					return;
+				}
+
 				ImcFile.ImageChangeData imageChangeData = this.File.GetVariant(this.Slot, this.Variant);
-				byte materialId = imageChangeData.MaterialId;
+				this.MaterialId = imageChangeData.MaterialId;
 			}
 		}
 	}

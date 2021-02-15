@@ -19,6 +19,7 @@
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition />
 			<ColumnDefinition />
+			<ColumnDefinition Width="32" />
 		</Grid.ColumnDefinitions>
 
 		<ComboBox
@@ -26,6 +27,7 @@
 			Grid.Column="0"
 			Margin="6"
 			md:HintAssist.Hint="Slot"
+			IsEnabled="{Binding CanSelectImcData}"
 			ItemsSource="{Binding ValidSlots}"
 			SelectedItem="{Binding Slot}"
 			Style="{StaticResource FilledComboBox}" />
@@ -35,8 +37,16 @@
 			Grid.Column="1"
 			Margin="6"
 			Hint="Variant"
+			IsEnabled="{Binding CanSelectImcData}"
 			Maximum="{Binding VariantCount}"
 			Value="{Binding Variant}" />
+
+		<TextBlock
+			Grid.Row="0"
+			Grid.Column="2"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center"
+			Text="{Binding MaterialId}" />
 
 	</Grid>
 </UserControl>
