@@ -38,7 +38,7 @@ namespace XIVBrowser.Views
 
 			foreach (ItemViewModel item in itemsSheet)
 			{
-				if (item.ModelBase == 0 && item.SubModelBase == 0)
+				if (item.ModelSet == 0 && item.SubModelSet == 0)
 					continue;
 
 				TreeEntry? category;

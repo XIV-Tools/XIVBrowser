@@ -10,6 +10,7 @@ namespace XIVBrowser.Views
 	using Lumina.Data.Files;
 	using LuminaExtensions;
 	using LuminaExtensions.Excel;
+	using LuminaExtensions.Files;
 	using XivBrowser;
 	using XIVBrowser.Extensions;
 	using XIVBrowser.Services;
@@ -38,18 +39,28 @@ namespace XIVBrowser.Views
 
 			this.Icon = this.Item.Icon.ToImageSource();
 
+			// TODO: if the item fits in more than one slot, let the user select
+			// or default to something sensible
+			ItemSlots slot = this.Item.FitsInSlots;
+
 			string imcFilePath = this.GetImcPath();
 			ImcFile? imc = LuminaService.Lumina.GetFile<ImcFile>(imcFilePath);
 			this.ImcView.Visibility = imc != null ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
 			if (imc != null)
 			{
 				this.ImcView.File = imc;
-				this.ImcView.Slot = this.Item.FitsInSlots;
+				this.ImcView.Slot = slot;
 				this.ImcView.Variant = this.Item.ModelVariant;
 				this.ImcView.CanSelectImcData = false;
 
-				ImcFile.ImageChangeData imageChangeData = imc.GetVariant(this.Item.FitsInSlots, this.Item.ModelVariant);
+				ImcFile.ImageChangeData imageChangeData = imc.GetVariant(slot, this.Item.ModelVariant);
 				string materialPath = this.GetMaterialPath(imageChangeData.MaterialId);
+
+				// Why bother checking the eqdp file for racial support? we could just see if the file exists within the file system
+				// and use that?
+				// Since we have to get all the eqdp files by race anyway...
+				EqdpFile file = LuminaService.Lumina.GetFile<EqdpFile>("chara/xls/charadb/equipmentdeformerparameter/c0101.eqdp");
+				EqdpFile.EquipmentDeformationParameter? f = file.GetParameters(this.Item.ModelSet, this.Item.IsAccessory, slot);
 			}
 		}
 
@@ -58,7 +69,7 @@ namespace XIVBrowser.Views
 			if (this.Item == null)
 				throw new Exception("No Item in item view");
 
-			ushort primaryId = this.Item.ModelBase;
+			ushort primaryId = this.Item.ModelSet;
 			string primaryIdStr4 = primaryId.ToString().PadLeft(4, '0');
 			string primaryIdStr6 = primaryId.ToString().PadLeft(6, '0');
 
@@ -82,7 +93,7 @@ namespace XIVBrowser.Views
 			if (this.Item == null)
 				throw new Exception("No Item in item view");
 
-			ushort primaryId = this.Item.ModelBase;
+			ushort primaryId = this.Item.ModelSet;
 			string primaryIdStr4 = primaryId.ToString().PadLeft(4, '0');
 			string primaryIdStr6 = primaryId.ToString().PadLeft(6, '0');
 
