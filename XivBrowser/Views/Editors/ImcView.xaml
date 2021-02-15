@@ -28,7 +28,7 @@
 			md:HintAssist.Hint="Slot"
 			ItemsSource="{Binding ValidSlots}"
 			SelectedItem="{Binding Slot}"
-			Style="{StaticResource MaterialDesignFilledComboBox}" />
+			Style="{StaticResource FilledComboBox}" />
 
 		<controls:NumberBox
 			Grid.Row="0"
