@@ -4,9 +4,9 @@
 namespace XIVBrowser
 {
 	using System.Windows;
-	using XivToolsWpf.ModelView;
+	using System.Windows.Controls;
 
-	public partial class MainView : View
+	public partial class MainView : UserControl
 	{
 		public MainView()
 		{

@@ -4,6 +4,7 @@
 namespace XIVBrowser
 {
 	using System.Collections.Generic;
+	using System.ComponentModel;
 	using System.Diagnostics;
 	using System.IO;
 	using System.Runtime.CompilerServices;
@@ -16,7 +17,6 @@ namespace XIVBrowser
 	using Newtonsoft.Json;
 	using Serilog;
 	using XIVBrowser.Services;
-	using XivToolsWpf.ModelView;
 
 	/// <summary>
 	/// Interaction logic for FileScanWindow.xaml.
@@ -36,7 +36,7 @@ namespace XIVBrowser
 			Task.Run(() => this.scan.Run());
 		}
 
-		public class Scan : Bindable
+		public class Scan : INotifyPropertyChanged
 		{
 			public Dictionary<ulong, FileService.SqFileInfo> FileLookup = new Dictionary<ulong, FileService.SqFileInfo>();
 
@@ -49,25 +49,14 @@ namespace XIVBrowser
 			{
 				this.Maximum = 100;
 				this.Current = 0;
+				this.Status = string.Empty;
 			}
 
-			public double Maximum
-			{
-				get => this.GetValue<double>();
-				set => this.SetValue(value);
-			}
+			public event PropertyChangedEventHandler? PropertyChanged;
 
-			public double Current
-			{
-				get => this.GetValue<double>();
-				set => this.SetValue(value);
-			}
-
-			public string Status
-			{
-				get => this.GetValue<string>();
-				set => this.SetValue(value);
-			}
+			public double Maximum { get; set; }
+			public double Current { get; set; }
+			public string Status { get; set; }
 
 			public void Run()
 			{

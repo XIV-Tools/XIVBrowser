@@ -4,36 +4,62 @@
 namespace XivBrowser.Views.Editors
 {
 	using System;
+	using System.Collections.Generic;
+	using System.ComponentModel;
+	using System.Windows;
 	using System.Windows.Controls;
 	using Lumina.Data.Files;
-	using XivToolsWpf.ModelView;
+	using LuminaExtensions;
 
 	/// <summary>
 	/// Interaction logic for ImcView.xaml.
 	/// </summary>
 	[DocumentEditor(typeof(ImcFile))]
-	public partial class ImcView : View, IDocumentEditor
+	public partial class ImcView : UserControl, IDocumentEditor, INotifyPropertyChanged
 	{
+		private ImcFile? file;
+
 		public ImcView()
 		{
 			this.InitializeComponent();
+			this.DataContext = this;
+
+			this.PropertyChanged += this.OnPropertyChanged;
 		}
 
-		public ushort VariantCount
-		{
-			get => this.GetValue<ushort>();
-			set => this.SetValue(value);
-		}
+		public event PropertyChangedEventHandler? PropertyChanged;
 
-		public ImcFile File
+		public ImcFile? File
 		{
-			get => this.GetValue<ImcFile>();
+			get => this.file;
 			set
 			{
-				this.SetValue(value);
-				this.VariantCount = value.Count;
+				if (value != null)
+				{
+					this.VariantCount = value.Count;
+				}
+
+				this.file = value;
 			}
 		}
+
+		public ushort VariantCount { get; set; }
+		public ItemSlots Slot { get; set; }
+		public ushort Variant { get; set; }
+
+		public List<ItemSlots> ValidSlots => new ()
+		{
+			ItemSlots.Head,
+			ItemSlots.Body,
+			ItemSlots.Hands,
+			ItemSlots.Legs,
+			ItemSlots.Feet,
+			ItemSlots.Ears,
+			ItemSlots.Neck,
+			ItemSlots.Wrists,
+			ItemSlots.RightRing,
+			ItemSlots.LeftRing,
+		};
 
 		public void SetDocument(Document document)
 		{
@@ -44,6 +70,18 @@ namespace XivBrowser.Views.Editors
 			else
 			{
 				throw new Exception($"Attempt to use ImcEditor for wrong document type: {document.Data}");
+			}
+		}
+
+		private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
+		{
+			if (this.File == null)
+				return;
+
+			if (e.PropertyName == nameof(ImcView.Slot) || e.PropertyName == nameof(ImcView.Variant))
+			{
+				ImcFile.ImageChangeData imageChangeData = this.File.GetVariant(this.Slot, this.Variant);
+				byte materialId = imageChangeData.MaterialId;
 			}
 		}
 	}

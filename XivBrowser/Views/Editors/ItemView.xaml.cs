@@ -6,56 +6,54 @@ namespace XIVBrowser.Views
 	using System;
 	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
+	using System.ComponentModel;
+	using System.Windows.Controls;
 	using System.Windows.Media;
 	using Lumina.Data.Files;
+	using LuminaExtensions;
 	using LuminaExtensions.Excel;
 	using LuminaExtensions.Files;
 	using XivBrowser;
 	using XIVBrowser.Extensions;
 	using XIVBrowser.Services;
 	using XivBrowser.Views.Editors;
-	using XivToolsWpf.ModelView;
 
 	[DocumentEditor(typeof(ItemViewModel))]
-	public partial class ItemView : View, IDocumentEditor
+	public partial class ItemView : UserControl, IDocumentEditor, INotifyPropertyChanged
 	{
 		public ItemView()
 		{
 			this.InitializeComponent();
-			this.MaterialPaths = new ObservableCollection<FileService.SqFileInfo>();
+			this.DataContext = this;
 		}
 
-		public ItemViewModel? Item
-		{
-			get => this.GetValue<ItemViewModel?>();
-			set => this.SetValue(value);
-		}
+		public event PropertyChangedEventHandler? PropertyChanged;
 
-		public ImageSource? Icon
-		{
-			get => this.GetValue<ImageSource?>();
-			set => this.SetValue(value);
-		}
-
-		public ObservableCollection<FileService.SqFileInfo> MaterialPaths
-		{
-			get => this.GetValue<ObservableCollection<FileService.SqFileInfo>>();
-			set => this.SetValue(value);
-		}
+		public ItemViewModel? Item { get; set; }
+		public ImageSource? Icon { get; set; }
+		public ObservableCollection<FileService.SqFileInfo> MaterialPaths { get; set; } = new ObservableCollection<FileService.SqFileInfo>();
 
 		public void SetDocument(Document document)
 		{
 			this.Item = document.Data as ItemViewModel;
 
-			this.Icon = this.Item?.Icon.ToImageSource();
+			if (this.Item == null)
+				return;
+
+			this.Icon = this.Item.Icon.ToImageSource();
 
 			string imcFilePath = this.GetImcPath();
 			ImcFile? imc = LuminaService.Lumina.GetFile<ImcFile>(imcFilePath);
-
-			if (imc != null)
-				this.ImcView.File = imc;
-
 			this.ImcView.Visibility = imc != null ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+			if (imc != null)
+			{
+				this.ImcView.File = imc;
+				this.ImcView.Slot = this.Item.FitsInSlots;
+				this.ImcView.Variant = this.Item.ModelVariant;
+
+				// TODO: items that fit in multiple slots?
+				ImcFile.ImageChangeData imcData = imc.GetVariant(this.Item.FitsInSlots, this.Item.ModelVariant);
+			}
 
 			IEnumerable<FileService.SqFileInfo>? childFiles = FileService.Search(this.GetDirectory());
 			foreach (FileService.SqFileInfo file in childFiles)

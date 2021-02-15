@@ -5,12 +5,13 @@ namespace XIVBrowser.Views
 {
 	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
-	using XivToolsWpf.ModelView;
+	using System.ComponentModel;
+	using System.Windows.Controls;
 
 	/// <summary>
 	/// Interaction logic for ExplorerView.xaml.
 	/// </summary>
-	public partial class ExplorerView : View
+	public partial class ExplorerView : UserControl, INotifyPropertyChanged
 	{
 		public ExplorerView()
 		{
@@ -19,23 +20,11 @@ namespace XIVBrowser.Views
 			this.Refresh();
 		}
 
-		public ObservableCollection<FileService.SqFileInfo>? Files
-		{
-			get => this.GetValue<ObservableCollection<FileService.SqFileInfo>?>();
-			set => this.SetValue(value);
-		}
+		public event PropertyChangedEventHandler? PropertyChanged;
 
-		public int FilesWithPaths
-		{
-			get => this.GetValue<int>();
-			set => this.SetValue(value);
-		}
-
-		public int TotalFiles
-		{
-			get => this.GetValue<int>();
-			set => this.SetValue(value);
-		}
+		public ObservableCollection<FileService.SqFileInfo>? Files { get; set; }
+		public int FilesWithPaths { get; set; }
+		public int TotalFiles { get; set; }
 
 		public void Refresh()
 		{

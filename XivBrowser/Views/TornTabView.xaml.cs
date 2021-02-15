@@ -3,11 +3,10 @@
 
 namespace XIVBrowser
 {
-	using System.Windows;
-	using XivToolsWpf.ModelView;
+	using System.Windows.Controls;
 	using static XIVBrowser.Views.DocumentWell;
 
-	public partial class TornTabView : View
+	public partial class TornTabView : UserControl
 	{
 		private readonly InterTabClient tabClient = new InterTabClient();
 

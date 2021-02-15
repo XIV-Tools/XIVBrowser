@@ -5,30 +5,30 @@ namespace XIVBrowser.Views
 {
 	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
+	using System.ComponentModel;
 	using System.Windows;
+	using System.Windows.Controls;
 	using Lumina;
 	using Lumina.Excel.GeneratedSheets;
 	using LuminaExtensions;
 	using LuminaExtensions.Excel;
 	using XivBrowser;
 	using XIVBrowser.Services;
-	using XivToolsWpf.ModelView;
 
 	/// <summary>
 	/// Interaction logic for ItemsView.xaml.
 	/// </summary>
-	public partial class ItemsView : View
+	public partial class ItemsView : UserControl, INotifyPropertyChanged
 	{
 		public ItemsView()
 		{
 			this.InitializeComponent();
+			this.DataContext = this;
 		}
 
-		public ObservableCollection<TreeEntry>? Items
-		{
-			get => this.GetValue<ObservableCollection<TreeEntry>?>();
-			set => this.SetValue(value);
-		}
+		public event PropertyChangedEventHandler? PropertyChanged;
+
+		public ObservableCollection<TreeEntry>? Items { get; set; }
 
 		public void Refresh()
 		{
@@ -80,24 +80,17 @@ namespace XIVBrowser.Views
 			public new string Name => this.Item.Name;
 		}
 
-		public class TreeEntry : Bindable
+		public class TreeEntry : INotifyPropertyChanged
 		{
 			public TreeEntry()
 			{
 				this.Children = new List<TreeEntry>();
 			}
 
-			public List<TreeEntry> Children
-			{
-				get => this.GetValue<List<TreeEntry>>();
-				set => this.SetValue(value);
-			}
+			public event PropertyChangedEventHandler? PropertyChanged;
 
-			public string? Name
-			{
-				get => this.GetValue<string?>();
-				set => this.SetValue(value);
-			}
+			public List<TreeEntry> Children { get; set; }
+			public string? Name { get; set; }
 		}
 	}
 }

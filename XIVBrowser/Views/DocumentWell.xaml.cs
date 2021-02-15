@@ -9,13 +9,12 @@ namespace XIVBrowser.Views
 	using Dragablz;
 	using XivBrowser;
 	using XivBrowser.Views.Editors;
-	using XivToolsWpf.ModelView;
 	using XivToolsWpf.Windows;
 
 	/// <summary>
 	/// Interaction logic for DocumentWell.xaml.
 	/// </summary>
-	public partial class DocumentWell : View
+	public partial class DocumentWell : UserControl
 	{
 		private static DocumentWell? instance;
 		private readonly InterTabClient tabClient = new InterTabClient();

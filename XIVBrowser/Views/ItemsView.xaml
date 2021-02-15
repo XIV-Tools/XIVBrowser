@@ -1,11 +1,10 @@
-﻿<mv:View
+﻿<UserControl
 	x:Class="XIVBrowser.Views.ItemsView"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="clr-namespace:XIVBrowser.Views"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:mv="clr-namespace:XivToolsWpf.ModelView;assembly=XivToolsWpf"
 	d:DesignHeight="450"
 	d:DesignWidth="800"
 	Loaded="OnViewLoaded"
@@ -30,4 +29,4 @@
 			</TreeView.ItemTemplate>
 		</TreeView>
 	</Grid>
-</mv:View>
+</UserControl>
