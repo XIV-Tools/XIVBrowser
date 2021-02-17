@@ -60,7 +60,7 @@ namespace XIVBrowser.Views
 				// and use that?
 				// Since we have to get all the eqdp files by race anyway...
 				EqdpFile file = LuminaService.Lumina.GetFile<EqdpFile>("chara/xls/charadb/equipmentdeformerparameter/c0101.eqdp");
-				EqdpFile.EquipmentDeformationParameter? f = file.GetParameters(this.Item.ModelSet, this.Item.IsAccessory, slot);
+				bool f = file.IsSet(this.Item.ModelSet, slot);
 			}
 		}
 

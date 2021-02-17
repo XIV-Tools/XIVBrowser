@@ -47,10 +47,10 @@ namespace XIVBrowser
 				}
 			}
 
-			LoadPaths(new FileInfo("Data/AccessoryPaths.json"));
-			LoadPaths(new FileInfo("Data/EquipmentPaths.json"));
-			LoadPaths(new FileInfo("Data/HousingPaths.json"));
-			LoadPaths(new FileInfo("Data/WeaponPaths.json"));
+			////LoadPaths(new FileInfo("Data/AccessoryPaths.json"));
+			////LoadPaths(new FileInfo("Data/EquipmentPaths.json"));
+			////LoadPaths(new FileInfo("Data/HousingPaths.json"));
+			////LoadPaths(new FileInfo("Data/WeaponPaths.json"));
 
 			Log.Information($"Loaded {FileLookupPath.Count} file paths out of {FileLookupHash.Count} files.");
 		}
