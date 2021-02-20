@@ -3,6 +3,7 @@
 
 namespace XivBrowser.Views
 {
+	using System;
 	using System.Collections.Generic;
 	using System.ComponentModel;
 	using System.Windows;
@@ -10,6 +11,7 @@ namespace XivBrowser.Views
 	using Lumina.Data.Files;
 	using LuminaExtensions;
 	using LuminaExtensions.Excel;
+	using LuminaExtensions.Files;
 	using XIVBrowser.Services;
 	using XivToolsWpf.DependencyProperties;
 
@@ -29,6 +31,7 @@ namespace XivBrowser.Views
 		public event PropertyChangedEventHandler? PropertyChanged;
 
 		public ImcFile? ImcFile { get; private set; }
+		public MdlFile? MdlFile { get; private set; }
 
 		public ItemModelBase? Model
 		{
@@ -56,48 +59,55 @@ namespace XivBrowser.Views
 			sender.ImcView.Slot = sender.Slot;
 			sender.ImcView.Variant = value.ImcVariant;
 			sender.ImcView.CanSelectImcData = sender.Slot == ItemSlots.None;
+
+			sender.UpdateMdl();
 		}
 
 		private static void OnSlotChanged(ItemModelView sender, ItemSlots value)
 		{
 			sender.ImcView.Slot = value;
 			sender.ImcView.CanSelectImcData = value == ItemSlots.None;
+
+			sender.UpdateMdl();
 		}
 
-		/*private void Do()
+		private void UpdateMdl()
 		{
+			this.MdlFile = null;
+
+			if (this.ImcFile == null || this.Model == null || this.Slot == ItemSlots.None)
+				return;
+
 			ImcFile.ImageChangeData imageChangeData = this.ImcFile.GetVariant(this.Slot, this.Model.ImcVariant);
 
-			foreach (ushort raceTribeId in RaceTribeExtensions.All)
+			foreach (RaceTribes? value in Enum.GetValues(typeof(RaceTribes)))
 			{
-				// Why bother checking the eqdp file for racial support? we could just see if the material file exists within the file system.
-				////EqdpFile file = LuminaService.Lumina.GetFile<EqdpFile>($"chara/xls/charadb/equipmentdeformerparameter/c{raceTribe}.eqdp");
-				////bool f = file != null && file.IsSet(this.Item.ModelSet, slot);
+				if (value == null)
+					continue;
 
-				// TODO: get the materials from the mdl file.
-				List<char> materialVariants = new List<char>() { 'a', 'b', 'c', 'd', 'e', 'f', 'g', };
+				RaceTribes race = (RaceTribes)value;
 
-				foreach (char materialVariant in materialVariants)
+				// TODO: a combobox to select race.
+				if (race != RaceTribes.NpcMale && race != RaceTribes.NpcFemale)
 				{
-					string materialPath = this.GetMaterialPath(imageChangeData.MaterialId, raceTribeId, materialVariant);
-					MtrlFile? materialFile = LuminaService.Lumina.GetFile<MtrlFile>(materialPath);
+					string path = this.Model.GetModelPath(race, RaceTypes.Player, this.Slot);
+					this.MdlFile = LuminaService.Lumina.GetFile<MdlFile>(path);
+
+					// Just get first valid for now.
+					if (this.MdlFile != null)
+					{
+						this.MdlView.File = this.MdlFile;
+						break;
+					}
 				}
 			}
+
+			// Why bother checking the eqdp file for racial support? we could just see if the material file exists within the file system.
+			////EqdpFile file = LuminaService.Lumina.GetFile<EqdpFile>($"chara/xls/charadb/equipmentdeformerparameter/c{raceTribe}.eqdp");
+			////bool f = file != null && file.IsSet(this.Item.ModelSet, slot);
 		}
 
-		private string GetModelPath(ushort raceTribeId)
-		{
-			if (this.Item == null)
-				throw new Exception("No Item in item view");
-
-			string raceTribeIdStr4 = raceTribeId.ToString().PadLeft(4, '0');
-			string slotKey = this.Item.FitsInSlots.ToAbbreviation();
-
-			if (this.Item.IsEquipment)
-				return $"chara/equipment/e{this.Item.SetId}/model/c{raceTribeIdStr4}e{this.Item.SetId}_{slotKey}.mdl";
-		}
-
-		private string GetMaterialPath(byte materialId, ushort raceTribeId, char materialVariant)
+		/*private string GetMaterialPath(byte materialId, ushort raceTribeId, char materialVariant)
 		{
 			if (this.Item == null)
 				throw new Exception("No Item in item view");
