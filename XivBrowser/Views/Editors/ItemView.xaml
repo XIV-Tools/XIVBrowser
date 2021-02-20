@@ -6,6 +6,7 @@
 	xmlns:editors="clr-namespace:XivBrowser.Views.Editors"
 	xmlns:local="clr-namespace:XIVBrowser.Views"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:views="clr-namespace:XivBrowser.Views"
 	d:DesignHeight="450"
 	d:DesignWidth="800"
 	mc:Ignorable="d">
@@ -15,7 +16,8 @@
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
-			<RowDefinition />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 
 		<Grid>
@@ -46,17 +48,8 @@
 			<TextBlock
 				Grid.Row="0"
 				Grid.Column="1"
-				Margin="3">
-
-				<TextBlock.Text>
-					<MultiBinding StringFormat="{}{0} - Model: {1}, {2}, {3}">
-						<Binding Path="Item.Name" />
-						<Binding Path="Item.ModelSet" />
-						<Binding Path="Item.ModelBase" />
-						<Binding Path="Item.ModelVariant" />
-					</MultiBinding>
-				</TextBlock.Text>
-			</TextBlock>
+				Margin="3"
+				Text="{Binding Item.Name}" />
 
 			<TextBlock
 				Grid.Row="1"
@@ -71,10 +64,27 @@
 				Text="{Binding Item.FitsInSlots}" />
 		</Grid>
 
-		<GroupBox Grid.Row="1" Header="Imc">
-			<editors:ImcView x:Name="ImcView" />
+		<GroupBox Grid.Row="1" Visibility="{Binding Item.Model, Converter={StaticResource NotNullToVisibilityConverter}}">
+
+			<GroupBox.Header>
+				<TextBlock>
+					<TextBlock.Text>
+						<MultiBinding StringFormat="{} Main Model ({0})">
+							<Binding Path="Item.Model.Display" />
+						</MultiBinding>
+					</TextBlock.Text>
+				</TextBlock>
+			</GroupBox.Header>
+
+			<views:ItemModelView Model="{Binding Item.Model}" Slot="{Binding Slot}" />
 		</GroupBox>
 
+		<GroupBox
+			Grid.Row="2"
+			Header="Sub Model"
+			Visibility="{Binding Item.SubModel, Converter={StaticResource NotNullToVisibilityConverter}}">
+			<views:ItemModelView Model="{Binding Item.SubModel}" Slot="{Binding Slot}" />
+		</GroupBox>
 
 	</Grid>
 

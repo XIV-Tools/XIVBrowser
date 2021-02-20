@@ -6,10 +6,8 @@ namespace XIVBrowser.Views
 	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
 	using System.ComponentModel;
-	using System.Windows;
 	using System.Windows.Controls;
-	using Lumina;
-	using Lumina.Excel.GeneratedSheets;
+	using Lumina.Excel;
 	using LuminaExtensions;
 	using LuminaExtensions.Excel;
 	using XivBrowser;
@@ -32,15 +30,12 @@ namespace XIVBrowser.Views
 
 		public void Refresh()
 		{
-			ExcelSheetViewModel<ItemViewModel, Item> itemsSheet = LuminaService.Lumina.GetExcelSheet<ItemViewModel, Item>();
+			ExcelSheet<ItemEx>? itemsSheet = LuminaService.Lumina.GetExcelSheet<ItemEx>();
 
 			Dictionary<ItemSlots, TreeEntry> categoryLookup = new Dictionary<ItemSlots, TreeEntry>();
 
-			foreach (ItemViewModel item in itemsSheet)
+			foreach (ItemEx item in itemsSheet)
 			{
-				if (item.ModelSet == 0 && item.SubModelSet == 0)
-					continue;
-
 				TreeEntry? category;
 				if (!categoryLookup.TryGetValue(item.FitsInSlots, out category))
 				{
@@ -70,9 +65,9 @@ namespace XIVBrowser.Views
 
 		public class ItemTreeEntry : TreeEntry
 		{
-			public readonly ItemViewModel Item;
+			public readonly ItemEx Item;
 
-			public ItemTreeEntry(ItemViewModel item)
+			public ItemTreeEntry(ItemEx item)
 			{
 				this.Item = item;
 			}

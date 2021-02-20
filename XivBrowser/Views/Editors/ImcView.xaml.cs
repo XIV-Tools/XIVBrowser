@@ -22,9 +22,9 @@ namespace XivBrowser.Views.Editors
 		public ImcView()
 		{
 			this.InitializeComponent();
-			this.DataContext = this;
+			this.ContentArea.DataContext = this;
 
-			this.PropertyChanged += this.OnPropertyChanged;
+			this.PropertyChanged += this.OnSelfPropertyChanged;
 		}
 
 		public event PropertyChangedEventHandler? PropertyChanged;
@@ -75,7 +75,7 @@ namespace XivBrowser.Views.Editors
 			}
 		}
 
-		private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
+		private void OnSelfPropertyChanged(object? sender, PropertyChangedEventArgs e)
 		{
 			if (this.File == null)
 				return;
