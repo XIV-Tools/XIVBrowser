@@ -39,6 +39,7 @@ namespace XivBrowser.Views
 			set => FilePathDp.Set(this, value);
 		}
 
+		public string? FileName { get; set; }
 		public UserControl? FileContent { get; set; }
 		public string? Error { get; set; }
 
@@ -69,9 +70,12 @@ namespace XivBrowser.Views
 		private static void OnPathChanged(DocumentView sender, string? value)
 		{
 			sender.File = null;
+			sender.FileName = null;
 
 			if (value == null)
 				return;
+
+			sender.FileName = Path.GetFileName(value);
 
 			FileResource? file = LuminaService.GetFile(value);
 			sender.File = file;

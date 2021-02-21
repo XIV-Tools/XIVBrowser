@@ -10,6 +10,7 @@ namespace XIVBrowser.Services
 	using System.Text;
 	using System.Threading.Tasks;
 	using Lumina.Data;
+	using Lumina.Data.Files;
 	using LuminaExtensions.Files;
 	using LuminaMain = Lumina.Lumina;
 
@@ -39,6 +40,7 @@ namespace XIVBrowser.Services
 				case ".mtrl": return Lumina.GetFile<MtrlFile>(path);
 				case ".mdl": return Lumina.GetFile<MdlFile>(path);
 				case ".eqdp": return Lumina.GetFile<EqdpFile>(path);
+				case ".tex": return Lumina.GetFile<TexFile>(path);
 			}
 
 			return Lumina.GetFile(path);

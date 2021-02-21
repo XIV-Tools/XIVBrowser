@@ -10,7 +10,15 @@
 	mc:Ignorable="d">
 
 	<Grid x:Name="ContentArea">
-		<GroupBox Grid.Row="0" Header="{Binding FilePath}">
+
+		<GroupBox Grid.Row="0">
+			<GroupBox.Header>
+				<TextBlock
+					MaxWidth="{Binding ActualWidth, ElementName=ContentArea}"
+					Text="{Binding FileName}"
+					TextTrimming="CharacterEllipsis"
+					ToolTip="{Binding FilePath}" />
+			</GroupBox.Header>
 			<Grid>
 				<ContentPresenter Content="{Binding FileContent}" />
 				<TextBlock

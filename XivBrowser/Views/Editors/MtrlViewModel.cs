@@ -7,9 +7,5 @@ namespace XivBrowser.Views.Editors
 
 	public class MtrlViewModel : DocumentViewModel<MtrlFile, MtrlView>
 	{
-		protected override void OnFileChanged(MtrlFile? file)
-		{
-			base.OnFileChanged(file);
-		}
 	}
 }

@@ -35,7 +35,6 @@
 
 		<Border
 			Grid.Row="2"
-			MinHeight="100"
 			Background="{StaticResource MaterialDesignTextFieldBoxBackground}"
 			CornerRadius="0, 0, 5, 5">
 			<views:DocumentView FilePath="{Binding MaterialFullPath}" />
