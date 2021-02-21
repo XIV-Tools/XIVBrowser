@@ -9,17 +9,24 @@
 	d:DesignWidth="800"
 	mc:Ignorable="d">
 
-	<Grid>
+	<Grid x:Name="ContentArea">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition />
 		</Grid.RowDefinitions>
 
-		<editors:ImcView
-			x:Name="ImcView"
+		<GroupBox
 			Grid.Row="0"
-			Visibility="Visible" />
+			Header="{Binding Model.ImcFilePath}"
+			HeaderStringFormat="IMC: {0}">
+			<editors:ImcView x:Name="ImcView" Visibility="Visible" />
+		</GroupBox>
 
-		<editors:MdlView x:Name="MdlView" Grid.Row="1" />
+		<GroupBox
+			Grid.Row="1"
+			Header="{Binding MdlPath}"
+			HeaderStringFormat="MDL: {0}">
+			<editors:MdlView MdlPath="{Binding MdlPath}" />
+		</GroupBox>
 	</Grid>
 </UserControl>

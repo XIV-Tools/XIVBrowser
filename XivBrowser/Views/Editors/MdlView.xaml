@@ -5,10 +5,29 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="clr-namespace:XivBrowser.Views.Editors"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
 	d:DesignHeight="450"
 	d:DesignWidth="800"
 	mc:Ignorable="d">
 	<Grid x:Name="ContentArea">
-		<TextBlock Text="{Binding File.Size}" />
+
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition />
+		</Grid.RowDefinitions>
+
+		<ComboBox
+			Grid.Row="0"
+			md:HintAssist.Hint="Material"
+			ItemsSource="{Binding File.Materials}"
+			SelectedItem="{Binding MaterialPath}"
+			Style="{StaticResource FilledComboBox}" />
+
+		<Border
+			Grid.Row="1"
+			MinHeight="100"
+			Background="{StaticResource MaterialDesignTextFieldBoxBackground}"
+			CornerRadius="0, 0, 5, 5" />
+
 	</Grid>
 </UserControl>

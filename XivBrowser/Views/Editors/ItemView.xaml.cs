@@ -25,7 +25,6 @@ namespace XIVBrowser.Views
 
 		public ItemEx? Item { get; set; }
 		public ImageSource? Icon { get; set; }
-
 		public ItemSlots Slot { get; set; }
 
 		public void SetDocument(Document document)

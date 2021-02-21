@@ -17,7 +17,6 @@ namespace XIVBrowser
 			Themes.Apply(Brightness.Dark, Colors.DeepOrange);
 
 			LogService.Create();
-			FileService.Load();
 
 			this.MainWindow = StyledWindow.Show<MainView>();
 

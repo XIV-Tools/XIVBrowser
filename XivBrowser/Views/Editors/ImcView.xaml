@@ -25,7 +25,6 @@
 		<ComboBox
 			Grid.Row="0"
 			Grid.Column="0"
-			Margin="6"
 			md:HintAssist.Hint="Slot"
 			IsEnabled="{Binding CanSelectImcData}"
 			ItemsSource="{Binding ValidSlots}"
@@ -35,7 +34,6 @@
 		<controls:NumberBox
 			Grid.Row="0"
 			Grid.Column="1"
-			Margin="6"
 			Hint="Variant"
 			IsEnabled="{Binding CanSelectImcData}"
 			Maximum="{Binding VariantCount}"

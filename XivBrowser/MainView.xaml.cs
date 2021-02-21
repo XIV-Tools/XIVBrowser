@@ -12,10 +12,5 @@ namespace XIVBrowser
 		{
 			this.InitializeComponent();
 		}
-
-		private void OnFileScannerMenuClicked(object sender, RoutedEventArgs e)
-		{
-			new FileScanWindow().ShowDialog();
-		}
 	}
 }

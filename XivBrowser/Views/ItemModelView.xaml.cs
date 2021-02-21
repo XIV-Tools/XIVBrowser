@@ -26,12 +26,13 @@ namespace XivBrowser.Views
 		public ItemModelView()
 		{
 			this.InitializeComponent();
+			this.ContentArea.DataContext = this;
 		}
 
 		public event PropertyChangedEventHandler? PropertyChanged;
 
 		public ImcFile? ImcFile { get; private set; }
-		public MdlFile? MdlFile { get; private set; }
+		public string? MdlPath { get; private set; }
 
 		public ItemModelBase? Model
 		{
@@ -73,7 +74,7 @@ namespace XivBrowser.Views
 
 		private void UpdateMdl()
 		{
-			this.MdlFile = null;
+			this.MdlPath = null;
 
 			if (this.ImcFile == null || this.Model == null || this.Slot == ItemSlots.None)
 				return;
@@ -91,12 +92,9 @@ namespace XivBrowser.Views
 				if (race != RaceTribes.NpcMale && race != RaceTribes.NpcFemale)
 				{
 					string path = this.Model.GetModelPath(race, RaceTypes.Player, this.Slot);
-					this.MdlFile = LuminaService.Lumina.GetFile<MdlFile>(path);
-
-					// Just get first valid for now.
-					if (this.MdlFile != null)
+					if (LuminaService.Lumina.FileExists(path))
 					{
-						this.MdlView.File = this.MdlFile;
+						this.MdlPath = path;
 						break;
 					}
 				}
