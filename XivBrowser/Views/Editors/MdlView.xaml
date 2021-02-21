@@ -6,10 +6,12 @@
 	xmlns:local="clr-namespace:XivBrowser.Views.Editors"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+	xmlns:views="clr-namespace:XivBrowser.Views"
 	d:DesignHeight="450"
 	d:DesignWidth="800"
 	mc:Ignorable="d">
-	<Grid x:Name="ContentArea">
+
+	<Grid>
 
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
@@ -36,7 +38,7 @@
 			MinHeight="100"
 			Background="{StaticResource MaterialDesignTextFieldBoxBackground}"
 			CornerRadius="0, 0, 5, 5">
-			<local:MtrlView />
+			<views:DocumentView FilePath="{Binding MaterialFullPath}" />
 		</Border>
 
 	</Grid>

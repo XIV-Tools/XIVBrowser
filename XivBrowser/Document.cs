@@ -4,11 +4,11 @@
 namespace XivBrowser
 {
 	using System;
+	using System.ComponentModel;
 
-	public class Document
+	public class Document : INotifyPropertyChanged
 	{
 		public object Data;
-		public string Name;
 
 		public Document(string name, object data)
 		{
@@ -16,8 +16,13 @@ namespace XivBrowser
 			this.Data = data;
 		}
 
-		public Type DataType => this.Data.GetType();
+		public event PropertyChangedEventHandler? PropertyChanged;
 
+		public string Name { get; set; }
+		public string? Path { get; set; }
+		public Type DataType => this.Data.GetType();
 		public bool CanEdit => false;
+
+		public string? Directory => System.IO.Path.GetDirectoryName(this.Path)?.Replace("\\", "/");
 	}
 }

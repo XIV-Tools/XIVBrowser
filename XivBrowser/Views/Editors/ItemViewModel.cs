@@ -18,7 +18,7 @@ namespace XivBrowser.Views.Editors
 		public ImageSource? Icon { get; set; }
 		public ItemSlots Slot { get; set; }
 
-		protected override void OnFileChanged(ItemEx file)
+		protected override void OnFileChanged(ItemEx? file)
 		{
 			base.OnFileChanged(file);
 

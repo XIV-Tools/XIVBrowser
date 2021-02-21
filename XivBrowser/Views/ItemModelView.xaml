@@ -3,8 +3,8 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	xmlns:editors="clr-namespace:XivBrowser.Views.Editors"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:views="clr-namespace:XivBrowser.Views"
 	d:DesignHeight="450"
 	d:DesignWidth="800"
 	mc:Ignorable="d">
@@ -15,18 +15,7 @@
 			<RowDefinition />
 		</Grid.RowDefinitions>
 
-		<GroupBox
-			Grid.Row="0"
-			Header="{Binding Model.ImcFilePath}"
-			HeaderStringFormat="IMC: {0}">
-			<editors:ImcView x:Name="ImcView" Visibility="Visible" />
-		</GroupBox>
-
-		<GroupBox
-			Grid.Row="1"
-			Header="{Binding MdlPath}"
-			HeaderStringFormat="MDL: {0}">
-			<editors:MdlView MdlPath="{Binding MdlPath}" />
-		</GroupBox>
+		<views:DocumentView Grid.Row="0" FilePath="{Binding Model.ImcFilePath}" />
+		<views:DocumentView Grid.Row="1" FilePath="{Binding MdlPath}" />
 	</Grid>
 </UserControl>

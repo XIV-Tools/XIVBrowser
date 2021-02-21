@@ -4,6 +4,7 @@
 namespace XivBrowser.Views.Editors
 {
 	using System;
+	using System.Windows;
 	using System.Windows.Controls;
 	using XivToolsWpf.DependencyProperties;
 
@@ -22,6 +23,9 @@ namespace XivBrowser.Views.Editors
 			}
 		}
 
+		public Document? Document { get; set; }
+		public TView? View { get; private set; }
+
 		public override sealed bool CanEditFile(Type fileType)
 		{
 			return fileType == typeof(TFile);
@@ -31,6 +35,7 @@ namespace XivBrowser.Views.Editors
 		{
 			if (document.Data is TFile file)
 			{
+				this.Document = document;
 				this.File = file;
 			}
 			else
@@ -38,13 +43,23 @@ namespace XivBrowser.Views.Editors
 				throw new Exception($"Incoorect document file type: {document.Data} for view model file type: {typeof(TFile)}");
 			}
 
-			TView view = Activator.CreateInstance<TView>();
-			view.DataContext = this;
-			return view;
+			this.View = Activator.CreateInstance<TView>();
+			this.View.DataContext = this;
+			this.View.Loaded += this.OnViewLoaded;
+			return this.View;
 		}
 
-		protected virtual void OnFileChanged(TFile file)
+		protected virtual void OnFileChanged(TFile? file)
 		{
+		}
+
+		protected virtual void OnViewLoaded()
+		{
+		}
+
+		private void OnViewLoaded(object sender, RoutedEventArgs e)
+		{
+			this.OnViewLoaded();
 		}
 	}
 }

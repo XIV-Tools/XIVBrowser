@@ -18,13 +18,15 @@
 		<TreeView
 			x:Name="ItemTree"
 			Grid.Row="0"
+			Background="Transparent"
 			BorderThickness="0"
+			Foreground="{StaticResource MaterialDesignBody}"
 			ItemsSource="{Binding Items}"
 			MouseDoubleClick="TreeView_MouseDoubleClick"
 			VirtualizingStackPanel.IsVirtualizing="True">
 			<TreeView.ItemTemplate>
 				<HierarchicalDataTemplate ItemsSource="{Binding Children}">
-					<TextBlock Text="{Binding Name}" />
+					<TextBlock Foreground="{StaticResource MaterialDesignBody}" Text="{Binding Name}" />
 				</HierarchicalDataTemplate>
 			</TreeView.ItemTemplate>
 		</TreeView>

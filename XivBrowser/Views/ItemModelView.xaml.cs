@@ -46,6 +46,8 @@ namespace XivBrowser.Views
 			set => SlotsDp.Set(this, value);
 		}
 
+		public ImcFile.ImageChangeData? ImageChangeVariant { get; set; }
+
 		private static void OnModelChanged(ItemModelView sender, ItemModelBase? value)
 		{
 			if (value == null)
@@ -56,18 +58,18 @@ namespace XivBrowser.Views
 
 			sender.ImcFile = LuminaService.Lumina.GetFile<ImcFile>(value.ImcFilePath);
 
-			sender.ImcView.File = sender.ImcFile;
+			/*sender.ImcView.File = sender.ImcFile;
 			sender.ImcView.Slot = sender.Slot;
 			sender.ImcView.Variant = value.ImcVariant;
-			sender.ImcView.CanSelectImcData = sender.Slot == ItemSlots.None;
+			sender.ImcView.CanSelectImcData = sender.Slot == ItemSlots.None;*/
 
 			sender.UpdateMdl();
 		}
 
 		private static void OnSlotChanged(ItemModelView sender, ItemSlots value)
 		{
-			sender.ImcView.Slot = value;
-			sender.ImcView.CanSelectImcData = value == ItemSlots.None;
+			/*sender.ImcView.Slot = value;
+			sender.ImcView.CanSelectImcData = value == ItemSlots.None;*/
 
 			sender.UpdateMdl();
 		}
@@ -75,11 +77,12 @@ namespace XivBrowser.Views
 		private void UpdateMdl()
 		{
 			this.MdlPath = null;
+			this.ImageChangeVariant = null;
 
 			if (this.ImcFile == null || this.Model == null || this.Slot == ItemSlots.None)
 				return;
 
-			ImcFile.ImageChangeData imageChangeData = this.ImcFile.GetVariant(this.Slot, this.Model.ImcVariant);
+			this.ImageChangeVariant = this.ImcFile.GetVariant(this.Slot, this.Model.ImcVariant);
 
 			foreach (RaceTribes? value in Enum.GetValues(typeof(RaceTribes)))
 			{

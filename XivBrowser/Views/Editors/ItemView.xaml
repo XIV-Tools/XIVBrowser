@@ -61,7 +61,7 @@
 			<TextBlock
 				Grid.Row="2"
 				Grid.Column="1"
-				Text="{Binding Item.FitsInSlots}" />
+				Text="{Binding File.FitsInSlots}" />
 		</Grid>
 
 		<GroupBox Grid.Row="1" Visibility="{Binding File.Model, Converter={StaticResource NotNullToVisibilityConverter}}">

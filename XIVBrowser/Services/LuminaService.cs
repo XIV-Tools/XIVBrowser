@@ -5,10 +5,12 @@ namespace XIVBrowser.Services
 {
 	using System;
 	using System.Collections.Generic;
+	using System.IO;
 	using System.Linq;
 	using System.Text;
 	using System.Threading.Tasks;
-
+	using Lumina.Data;
+	using LuminaExtensions.Files;
 	using LuminaMain = Lumina.Lumina;
 
 	public static class LuminaService
@@ -26,6 +28,20 @@ namespace XIVBrowser.Services
 			{
 				return 0;
 			}
+		}
+
+		public static FileResource GetFile(string path)
+		{
+			// Special case to handle custom file types that lumina doesn't have built-in
+			string extension = Path.GetExtension(path);
+			switch (extension)
+			{
+				case ".mtrl": return Lumina.GetFile<MtrlFile>(path);
+				case ".mdl": return Lumina.GetFile<MdlFile>(path);
+				case ".eqdp": return Lumina.GetFile<EqdpFile>(path);
+			}
+
+			return Lumina.GetFile(path);
 		}
 	}
 }
