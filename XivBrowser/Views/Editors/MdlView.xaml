@@ -13,18 +13,26 @@
 
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
 			<RowDefinition />
 		</Grid.RowDefinitions>
 
+		<StackPanel Grid.Row="0" Orientation="Vertical">
+			<TextBlock Text="{Binding File.Attributes, Converter={StaticResource ListToStringConverter}, StringFormat=Attributes: {0}}" />
+			<TextBlock Text="{Binding File.Bones, Converter={StaticResource ListToStringConverter}, StringFormat=Bones: {0}}" />
+			<TextBlock Text="{Binding File.Shapes, Converter={StaticResource ListToStringConverter}, StringFormat=Shapes: {0}}" />
+			<TextBlock Text="{Binding File.ExtraPaths, Converter={StaticResource ListToStringConverter}, StringFormat=Extra Paths: {0}}" />
+		</StackPanel>
+
 		<ComboBox
-			Grid.Row="0"
+			Grid.Row="1"
 			md:HintAssist.Hint="Material"
 			ItemsSource="{Binding File.Materials}"
 			SelectedItem="{Binding MaterialPath}"
 			Style="{StaticResource FilledComboBox}" />
 
 		<Border
-			Grid.Row="1"
+			Grid.Row="2"
 			MinHeight="100"
 			Background="{StaticResource MaterialDesignTextFieldBoxBackground}"
 			CornerRadius="0, 0, 5, 5" />
