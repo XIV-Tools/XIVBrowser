@@ -14,8 +14,7 @@ namespace XivBrowser.Views.Editors
 	/// <summary>
 	/// Interaction logic for ImcView.xaml.
 	/// </summary>
-	[DocumentEditor(typeof(ImcFile))]
-	public partial class ImcView : UserControl, IDocumentEditor, INotifyPropertyChanged
+	public partial class ImcView : UserControl, INotifyPropertyChanged
 	{
 		private ImcFile? file;
 
@@ -62,18 +61,6 @@ namespace XivBrowser.Views.Editors
 			ItemSlots.RightRing,
 			ItemSlots.LeftRing,
 		};
-
-		public void SetDocument(Document document)
-		{
-			if (document.Data is ImcFile imc)
-			{
-				this.File = imc;
-			}
-			else
-			{
-				throw new Exception($"Attempt to use ImcEditor for wrong document type: {document.Data}");
-			}
-		}
 
 		private void OnSelfPropertyChanged(object? sender, PropertyChangedEventArgs e)
 		{

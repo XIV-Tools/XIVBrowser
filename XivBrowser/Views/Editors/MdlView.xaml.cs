@@ -15,8 +15,7 @@ namespace XivBrowser.Views.Editors
 	/// <summary>
 	/// Interaction logic for MdlView.xaml.
 	/// </summary>
-	[DocumentEditor(typeof(MdlFile))]
-	public partial class MdlView : UserControl, IDocumentEditor, INotifyPropertyChanged
+	public partial class MdlView : UserControl, INotifyPropertyChanged
 	{
 		public static IBind<string?> MdlPathDp = Binder.Register<string?, MdlView>(nameof(MdlPath), OnMdlPathChanged, BindMode.OneWay);
 
@@ -57,18 +56,6 @@ namespace XivBrowser.Views.Editors
 		}
 
 		public MtrlFile? MaterialFile { get; set; }
-
-		public void SetDocument(Document document)
-		{
-			if (document.Data is MdlFile mdl)
-			{
-				this.File = mdl;
-			}
-			else
-			{
-				throw new Exception($"Attempt to use MdlView for wrong document type: {document.Data}");
-			}
-		}
 
 		private static void OnMdlPathChanged(MdlView sender, string? value)
 		{

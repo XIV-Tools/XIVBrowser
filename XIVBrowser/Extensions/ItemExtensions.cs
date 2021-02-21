@@ -1,7 +1,7 @@
 ﻿// © XIV-Tools.
 // Licensed under the MIT license.
 
-namespace XIVBrowser.Extensions
+namespace XivBrowser.Extensions
 {
 	using Lumina.Excel.GeneratedSheets;
 

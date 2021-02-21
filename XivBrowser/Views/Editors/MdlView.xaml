@@ -35,7 +35,9 @@
 			Grid.Row="2"
 			MinHeight="100"
 			Background="{StaticResource MaterialDesignTextFieldBoxBackground}"
-			CornerRadius="0, 0, 5, 5" />
+			CornerRadius="0, 0, 5, 5">
+			<local:MtrlView />
+		</Border>
 
 	</Grid>
 </UserControl>

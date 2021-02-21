@@ -1,7 +1,7 @@
 ﻿// © XIV-Tools.
 // Licensed under the MIT license.
 
-namespace XIVBrowser.Extensions
+namespace XivBrowser.Extensions
 {
 	using System;
 	using System.Windows.Media;

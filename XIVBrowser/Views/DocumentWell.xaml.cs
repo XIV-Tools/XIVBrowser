@@ -32,12 +32,12 @@ namespace XIVBrowser.Views
 			if (instance == null)
 				return;
 
-			Type? editor = DocumentEditorAttribute.GetEditorForDocument(document.DataType);
+			DocumentViewModel? vm = DocumentViewModel.GetViewModelForFile(document.DataType);
 
-			if (editor == null)
+			if (vm == null)
 				return;
 
-			UserControl? view = Activator.CreateInstance(editor) as UserControl;
+			UserControl? view = vm.CreateView(document);
 
 			if (view == null)
 				return;
@@ -45,16 +45,6 @@ namespace XIVBrowser.Views
 			TabItem tab = new TabItem();
 			tab.Header = document.Name;
 			tab.Content = view;
-
-			if (view is IDocumentEditor documentEditor)
-			{
-				documentEditor.SetDocument(document);
-			}
-			else
-			{
-				view.DataContext = document.Data;
-			}
-
 			instance.InitialTabablzControl.Items.Add(tab);
 			tab.IsSelected = true;
 		}

@@ -1,5 +1,5 @@
 ﻿<UserControl
-	x:Class="XIVBrowser.Views.ItemView"
+	x:Class="XivBrowser.Views.Editors.ItemView"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -49,14 +49,14 @@
 				Grid.Row="0"
 				Grid.Column="1"
 				Margin="3"
-				Text="{Binding Item.Name}" />
+				Text="{Binding File.Name}" />
 
 			<TextBlock
 				Grid.Row="1"
 				Grid.Column="1"
 				Margin="3"
-				Text="{Binding Item.Description}"
-				Visibility="{Binding Item.Description, Converter={StaticResource StringHasContentToVisibility}}" />
+				Text="{Binding File.Description}"
+				Visibility="{Binding File.Description, Converter={StaticResource StringHasContentToVisibility}}" />
 
 			<TextBlock
 				Grid.Row="2"
@@ -64,26 +64,26 @@
 				Text="{Binding Item.FitsInSlots}" />
 		</Grid>
 
-		<GroupBox Grid.Row="1" Visibility="{Binding Item.Model, Converter={StaticResource NotNullToVisibilityConverter}}">
+		<GroupBox Grid.Row="1" Visibility="{Binding File.Model, Converter={StaticResource NotNullToVisibilityConverter}}">
 
 			<GroupBox.Header>
 				<TextBlock>
 					<TextBlock.Text>
 						<MultiBinding StringFormat="{} Main Model ({0})">
-							<Binding Path="Item.Model.Display" />
+							<Binding Path="File.Model.Display" />
 						</MultiBinding>
 					</TextBlock.Text>
 				</TextBlock>
 			</GroupBox.Header>
 
-			<views:ItemModelView Model="{Binding Item.Model}" Slot="{Binding Slot}" />
+			<views:ItemModelView Model="{Binding File.Model}" Slot="{Binding Slot}" />
 		</GroupBox>
 
 		<GroupBox
 			Grid.Row="2"
 			Header="Sub Model"
-			Visibility="{Binding Item.SubModel, Converter={StaticResource NotNullToVisibilityConverter}}">
-			<views:ItemModelView Model="{Binding Item.SubModel}" Slot="{Binding Slot}" />
+			Visibility="{Binding File.SubModel, Converter={StaticResource NotNullToVisibilityConverter}}">
+			<views:ItemModelView Model="{Binding File.SubModel}" Slot="{Binding Slot}" />
 		</GroupBox>
 
 	</Grid>
