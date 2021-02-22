@@ -33,6 +33,7 @@ namespace XivBrowser.Views
 
 		public event PropertyChangedEventHandler? PropertyChanged;
 
+		public string? ImcPath { get; private set; }
 		public ImcFile? ImcFile { get; private set; }
 		public string? MdlPath { get; private set; }
 

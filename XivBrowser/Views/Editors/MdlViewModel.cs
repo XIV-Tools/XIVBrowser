@@ -46,7 +46,7 @@ namespace XivBrowser.Views.Editors
 				throw new NotImplementedException();
 			}
 
-			if (this.Document == null || this.Document.Directory == null)
+			if (this.File == null || this.Document == null || this.Document.Directory == null)
 				throw new NotSupportedException("Cannot view mdl materials without document path");
 
 			string dir = this.Document.Directory;

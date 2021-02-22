@@ -59,7 +59,7 @@ namespace XIVBrowser.Views
 		{
 			if (this.ItemTree.SelectedItem is ItemTreeEntry itemTree)
 			{
-				DocumentWell.Open(new Document(itemTree.Item.Name, itemTree.Item));
+				DocumentWell.Open(new Document(itemTree.Name, itemTree.Item));
 			}
 		}
 

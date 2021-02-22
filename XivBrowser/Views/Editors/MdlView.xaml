@@ -40,7 +40,7 @@
 
 			<controls:ComboBoxWithContent.ContentTemplate>
 				<DataTemplate>
-					<views:DocumentView FilePath="{Binding FullPath}" />
+					<views:DocumentView FilePath="{Binding FullPath}" Header="Path" />
 				</DataTemplate>
 			</controls:ComboBoxWithContent.ContentTemplate>
 

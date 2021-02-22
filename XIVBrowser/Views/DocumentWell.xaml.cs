@@ -3,12 +3,11 @@
 
 namespace XIVBrowser.Views
 {
-	using System;
 	using System.Windows;
 	using System.Windows.Controls;
 	using Dragablz;
 	using XivBrowser;
-	using XivBrowser.Views.Editors;
+	using XivBrowser.Views;
 	using XivToolsWpf.Windows;
 
 	/// <summary>
@@ -32,21 +31,21 @@ namespace XIVBrowser.Views
 			if (instance == null)
 				return;
 
-			DocumentViewModel? vm = DocumentViewModel.GetViewModelForFile(document.DataType);
+			DocumentView documentView = new DocumentView();
+			documentView.Header = DocumentView.HeaderModes.Path;
 
-			if (vm == null)
-				return;
-
-			UserControl? view = vm.CreateView(document);
-
-			if (view == null)
-				return;
+			ScrollViewer scroll = new ScrollViewer();
+			scroll.Content = documentView;
+			scroll.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled;
+			scroll.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
 
 			TabItem tab = new TabItem();
 			tab.Header = document.Name;
-			tab.Content = view;
+			tab.Content = scroll;
 			instance.InitialTabablzControl.Items.Add(tab);
 			tab.IsSelected = true;
+
+			documentView.OpenDocument(document);
 		}
 
 		private void OnTabClosing(ItemActionCallbackArgs<TabablzControl> args)

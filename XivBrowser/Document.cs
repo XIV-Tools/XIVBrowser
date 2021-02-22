@@ -16,6 +16,13 @@ namespace XivBrowser
 			this.Data = data;
 		}
 
+		public Document(object data, string path)
+		{
+			this.Path = path;
+			this.Name = System.IO.Path.GetFileName(path);
+			this.Data = data;
+		}
+
 		public event PropertyChangedEventHandler? PropertyChanged;
 
 		public string Name { get; set; }
