@@ -2,6 +2,7 @@
 	x:Class="XivBrowser.Views.Editors.MdlView"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:controls="clr-namespace:XivToolsWpf.Controls;assembly=XivToolsWpf"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="clr-namespace:XivBrowser.Views.Editors"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -15,7 +16,6 @@
 
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
 			<RowDefinition />
 		</Grid.RowDefinitions>
 
@@ -26,19 +26,25 @@
 			<TextBlock Text="{Binding File.ExtraPaths, Converter={StaticResource ListToStringConverter}, StringFormat=Extra Paths: {0}}" />
 		</StackPanel>
 
-		<ComboBox
+		<controls:ComboBoxWithContent
 			Grid.Row="1"
-			md:HintAssist.Hint="Material"
-			ItemsSource="{Binding File.Materials}"
-			SelectedItem="{Binding MaterialPath}"
-			Style="{StaticResource FilledComboBox}" />
+			Hint="Material"
+			ItemsSource="{Binding Materials}"
+			SelectedItem="{Binding SelectedMaterial}">
 
-		<Border
-			Grid.Row="2"
-			Background="{StaticResource MaterialDesignTextFieldBoxBackground}"
-			CornerRadius="0, 0, 5, 5">
-			<views:DocumentView FilePath="{Binding MaterialFullPath}" />
-		</Border>
+			<controls:ComboBoxWithContent.ComboBoxItemTemplate>
+				<DataTemplate>
+					<TextBlock Text="{Binding Path}" />
+				</DataTemplate>
+			</controls:ComboBoxWithContent.ComboBoxItemTemplate>
+
+			<controls:ComboBoxWithContent.ContentTemplate>
+				<DataTemplate>
+					<views:DocumentView FilePath="{Binding FullPath}" />
+				</DataTemplate>
+			</controls:ComboBoxWithContent.ContentTemplate>
+
+		</controls:ComboBoxWithContent>
 
 	</Grid>
 </UserControl>

@@ -11,23 +11,53 @@
 
 	<Grid x:Name="ContentArea">
 
-		<GroupBox Grid.Row="0">
-			<GroupBox.Header>
-				<TextBlock
-					MaxWidth="{Binding ActualWidth, ElementName=ContentArea}"
-					Text="{Binding FileName}"
-					TextTrimming="CharacterEllipsis"
-					ToolTip="{Binding FilePath}" />
-			</GroupBox.Header>
-			<Grid>
-				<ContentPresenter Content="{Binding FileContent}" />
-				<TextBlock
-					HorizontalAlignment="Center"
-					VerticalAlignment="Center"
-					Text="{Binding Error}"
-					Visibility="{Binding Error, Converter={StaticResource NotNullToVisibilityConverter}}" />
-			</Grid>
-		</GroupBox>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition />
+		</Grid.RowDefinitions>
+
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition />
+		</Grid.ColumnDefinitions>
+
+		<TextBlock
+			Grid.Row="0"
+			Grid.Column="0"
+			MaxWidth="{Binding ActualWidth, ElementName=ContentArea}"
+			Text="{Binding HeaderText}"
+			TextTrimming="CharacterEllipsis"
+			ToolTip="{Binding FilePath}"
+			Visibility="{Binding HeaderText, Converter={StaticResource NotNullToVisibilityConverter}}" />
+
+		<Line
+			Grid.Row="0"
+			Grid.Column="1"
+			Margin="6,3,0,0"
+			VerticalAlignment="Center"
+			Opacity="0.25"
+			SnapsToDevicePixels="True"
+			Stretch="Fill"
+			Stroke="{DynamicResource MaterialDesignBodyLight}"
+			StrokeThickness="1"
+			Visibility="{Binding HeaderText, Converter={StaticResource NotNullToVisibilityConverter}}"
+			X1="0"
+			X2="1" />
+
+		<ContentPresenter
+			Grid.Row="1"
+			Grid.ColumnSpan="2"
+			Content="{Binding FileContent}"
+			Visibility="{Binding HeaderText, Converter={StaticResource NullToVisibilityConverter}}" />
+
+		<TextBlock
+			Grid.Row="1"
+			Grid.ColumnSpan="2"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center"
+			Text="{Binding Error}"
+			Visibility="{Binding Error, Converter={StaticResource NotNullToVisibilityConverter}}" />
+
 	</Grid>
 
 </UserControl>

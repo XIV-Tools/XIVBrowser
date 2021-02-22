@@ -4,6 +4,7 @@
 namespace XivBrowser.Views.Editors
 {
 	using System;
+	using System.Collections.ObjectModel;
 	using System.IO;
 	using System.Linq;
 	using System.Windows;
@@ -11,19 +12,20 @@ namespace XivBrowser.Views.Editors
 
 	public class MdlViewModel : DocumentViewModel<MdlFile, MdlView>
 	{
-		private string? materialPath;
-
-		public string? MaterialFullPath { get; set; }
 		public byte? MaterialSetId { get; set; }
+		public ObservableCollection<MaterialOption> Materials { get; set; } = new ObservableCollection<MaterialOption>();
+		public MaterialOption? SelectedMaterial { get; set; }
 
-		public string? MaterialPath
+		protected override void OnFileChanged(MdlFile? file)
 		{
-			get => this.materialPath;
-			set
-			{
-				this.materialPath = value;
-				this.UpdateMaterialPath();
-			}
+			base.OnFileChanged(file);
+
+			this.Materials.Clear();
+
+			if (file == null)
+				return;
+
+			////this.OnViewLoaded();
 		}
 
 		protected override void OnViewLoaded()
@@ -44,20 +46,34 @@ namespace XivBrowser.Views.Editors
 				throw new NotImplementedException();
 			}
 
-			this.MaterialPath = this.File?.Materials.FirstOrDefault();
-		}
-
-		private void UpdateMaterialPath()
-		{
-			if (this.Document == null || this.Document.Directory == null || this.MaterialSetId == null)
-				return;
+			if (this.Document == null || this.Document.Directory == null)
+				throw new NotSupportedException("Cannot view mdl materials without document path");
 
 			string dir = this.Document.Directory;
 			dir = dir.Replace("model", "material");
 			string? str = (this.MaterialSetId - 1).ToString();
 			string matKey = "v" + str!.PadLeft(4, '0');
+			dir = dir + "/" + matKey;
 
-			this.MaterialFullPath = dir + "/" + matKey + this.MaterialPath;
+			foreach (string materialPath in this.File.Materials)
+			{
+				string fullPath = dir + materialPath;
+				this.Materials.Add(new MaterialOption(materialPath, fullPath));
+			}
+
+			this.SelectedMaterial = this.Materials?.FirstOrDefault();
+		}
+
+		public class MaterialOption
+		{
+			public MaterialOption(string path, string fullPath)
+			{
+				this.Path = path;
+				this.FullPath = fullPath;
+			}
+
+			public string Path { get; set; }
+			public string FullPath { get; set; }
 		}
 	}
 }

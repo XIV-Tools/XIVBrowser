@@ -5,7 +5,9 @@ namespace XivBrowser.Views
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Collections.ObjectModel;
 	using System.ComponentModel;
+	using System.IO;
 	using System.Windows;
 	using System.Windows.Controls;
 	using Lumina.Data.Files;
@@ -33,6 +35,9 @@ namespace XivBrowser.Views
 
 		public ImcFile? ImcFile { get; private set; }
 		public string? MdlPath { get; private set; }
+
+		public ObservableCollection<AvailableRace> AvailableRaces { get; set; } = new ObservableCollection<AvailableRace>();
+		public AvailableRace? SelectedRace { get; set; }
 
 		public ItemModelBase? Model
 		{
@@ -84,57 +89,45 @@ namespace XivBrowser.Views
 
 			this.ImageChangeVariant = this.ImcFile.GetVariant(this.Slot, this.Model.ImcVariant);
 
-			foreach (RaceTribes? value in Enum.GetValues(typeof(RaceTribes)))
+			// Check every possible race/type if it produces a valid model path.
+			Array allRaces = Enum.GetValues(typeof(RaceTribes));
+			Array? allRaceTypes = Enum.GetValues(typeof(RaceTypes));
+			foreach (RaceTribes race in allRaces)
 			{
-				if (value == null)
-					continue;
-
-				RaceTribes race = (RaceTribes)value;
-
-				// TODO: a combobox to select race.
-				if (race != RaceTribes.NpcMale && race != RaceTribes.NpcFemale)
+				foreach (RaceTypes type in allRaceTypes)
 				{
-					string path = this.Model.GetModelPath(race, RaceTypes.Player, this.Slot);
+					string path = this.Model.GetModelPath(race, type, this.Slot);
 					if (LuminaService.Lumina.FileExists(path))
 					{
-						this.MdlPath = path;
-						break;
+						AvailableRace option = new AvailableRace(race, type, path);
+						this.AvailableRaces.Add(option);
 					}
 				}
 			}
 
-			// Why bother checking the eqdp file for racial support? we could just see if the material file exists within the file system.
+			if (this.AvailableRaces.Count > 0)
+				this.SelectedRace = this.AvailableRaces[0];
+
 			////EqdpFile file = LuminaService.Lumina.GetFile<EqdpFile>($"chara/xls/charadb/equipmentdeformerparameter/c{raceTribe}.eqdp");
 			////bool f = file != null && file.IsSet(this.Item.ModelSet, slot);
 		}
 
-		/*private string GetMaterialPath(byte materialId, ushort raceTribeId, char materialVariant)
+		public class AvailableRace
 		{
-			if (this.Item == null)
-				throw new Exception("No Item in item view");
-
-			ushort primaryId = this.Item.ModelSet;
-
-			string primaryIdStr4 = primaryId.ToString().PadLeft(4, '0');
-			string raceTribeIdStr4 = raceTribeId.ToString().PadLeft(4, '0');
-			string materialIdStr4 = (materialId - 1).ToString().PadLeft(4, '0');
-			string slotKey = this.Item.FitsInSlots.ToAbbreviation();
-
-			if (this.Item.IsEquipment)
-				return $"chara/equipment/e{primaryIdStr4}/material/v{materialIdStr4}/mt_c{raceTribeIdStr4}e{primaryIdStr4}_{slotKey}_{materialVariant}.mtrl";
-
-			if (this.Item.IsAccessory)
-				return $"chara/accessory/a{primaryIdStr4}/a{primaryIdStr4}.imc";
-
-			if (this.Item.IsWeapon)
+			public AvailableRace(RaceTribes race, RaceTypes type, string path)
 			{
-				throw new NotImplementedException();
-				ushort secondaryId = 0000; // ??
-				string secondaryIdStr4 = secondaryId.ToString().PadLeft(4, '0');
-				return $"chara/weapon/w{primaryIdStr4}/obj/body/b{secondaryIdStr4}/b{secondaryIdStr4}.imc";
+				this.Name = race.ToDisplayName() + " " + type.ToString() + " - " + Path.GetFileName(path);
+				this.Key = race.ToKey(type);
+				this.Race = race;
+				this.Type = type;
+				this.MdlPath = path;
 			}
 
-			throw new NotSupportedException($"No material path generator for item type: {this.Item}");
-		}*/
+			public string Name { get; set; }
+			public string Key { get; set; }
+			public RaceTribes Race { get; set; }
+			public RaceTypes Type { get; set; }
+			public string MdlPath { get; set; }
+		}
 	}
 }
