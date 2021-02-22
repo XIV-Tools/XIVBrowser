@@ -24,14 +24,10 @@
   </ItemGroup>
 
   <ItemGroup>
+	<ProjectReference Include="..\..\LuminaExtensions\LuminaExtensions.csproj" />
+	<ProjectReference Include="..\..\XivToolsWpf\XivToolsWpf.csproj" />
 	<ProjectReference Include="..\Lib\LuminaExtensions\LuminaExtensions.csproj" />
 	<ProjectReference Include="..\Lib\XivToolsWpf\XivToolsWpf.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-	<None Update="Data\*.json">
-	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	</None>
   </ItemGroup>
 
 </Project>
