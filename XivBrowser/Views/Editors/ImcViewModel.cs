@@ -4,6 +4,7 @@
 namespace XivBrowser.Views.Editors
 {
 	using System.Collections.Generic;
+	using System.Windows;
 	using Lumina.Data.Files;
 	using LuminaExtensions;
 
@@ -12,9 +13,9 @@ namespace XivBrowser.Views.Editors
 		private ItemSlots slot;
 		private ushort variant;
 
-		public ushort VariantCount { get; set; }
+		public int VariantCount { get; set; }
 		public bool CanSelectImcData { get; set; } = true;
-		public byte MaterialId { get; set; }
+		public string MaterialKey { get; set; } = string.Empty;
 
 		public List<ItemSlots> ValidSlots { get; } = new ()
 		{
@@ -36,6 +37,7 @@ namespace XivBrowser.Views.Editors
 			set
 			{
 				this.slot = value;
+				this.UpdateVariantCount();
 				this.UpdateMaterialId();
 			}
 		}
@@ -48,6 +50,38 @@ namespace XivBrowser.Views.Editors
 				this.variant = value;
 				this.UpdateMaterialId();
 			}
+		}
+
+		protected override void OnViewLoaded()
+		{
+			base.OnViewLoaded();
+
+			if (this.View == null)
+				return;
+
+			ItemModelView? itemModelView = this.View.FindParent<ItemModelView>();
+
+			if (itemModelView == null || itemModelView.Model == null)
+				return;
+
+			this.Slot = itemModelView.Slot;
+			this.Variant = itemModelView.Model.ImcVariant;
+			this.CanSelectImcData = false;
+		}
+
+		private void UpdateVariantCount()
+		{
+			if (this.File == null)
+				return;
+
+			if (!this.ValidSlots.Contains(this.Slot))
+			{
+				// Invalid slot for IMC
+				return;
+			}
+
+			ImcFile.ImageChangeParts part = this.File.GetPart(this.slot);
+			this.VariantCount = part.Variants.Length;
 		}
 
 		private void UpdateMaterialId()
@@ -64,11 +98,11 @@ namespace XivBrowser.Views.Editors
 			ImcFile.ImageChangeData imageChangeData;
 			if (this.File.TryGetVariant(this.Slot, this.Variant, out imageChangeData))
 			{
-				this.MaterialId = imageChangeData.MaterialId;
+				this.MaterialKey = "v" + (imageChangeData.MaterialId - 1).ToString().PadLeft(4, '0');
 			}
 			else
 			{
-				this.MaterialId = 0;
+				this.MaterialKey = string.Empty;
 			}
 		}
 	}

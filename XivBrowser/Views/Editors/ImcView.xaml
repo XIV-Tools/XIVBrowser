@@ -19,7 +19,8 @@
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition />
 			<ColumnDefinition />
-			<ColumnDefinition Width="32" />
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition />
 		</Grid.ColumnDefinitions>
 
 		<ComboBox
@@ -29,7 +30,7 @@
 			IsEnabled="{Binding CanSelectImcData}"
 			ItemsSource="{Binding ValidSlots}"
 			SelectedItem="{Binding Slot}"
-			Style="{StaticResource FilledComboBox}" />
+			Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
 
 		<controls:NumberBox
 			Grid.Row="0"
@@ -41,11 +42,20 @@
 			Value="{Binding Variant}" />
 
 		<TextBlock
-			Grid.Row="0"
 			Grid.Column="2"
+			Margin="6"
 			HorizontalAlignment="Center"
 			VerticalAlignment="Center"
-			Text="{Binding MaterialId}" />
+			Text="=" />
+
+		<TextBox
+			Grid.Row="0"
+			Grid.Column="3"
+			Margin="2"
+			md:HintAssist.Hint="Material Key"
+			IsEnabled="False"
+			Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+			Text="{Binding MaterialKey}" />
 
 	</Grid>
 </UserControl>

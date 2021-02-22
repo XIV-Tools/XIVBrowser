@@ -13,26 +13,35 @@
 
 	<Grid x:Name="ContentArea">
 
-		<controls:ComboBoxWithContent
-			Hint="Race"
-			ItemsSource="{Binding AvailableRaces}"
-			SelectedItem="{Binding SelectedRace}">
-			<controls:ComboBoxWithContent.ComboBoxItemTemplate>
-				<DataTemplate>
-					<TextBlock Text="{Binding Name}" />
-				</DataTemplate>
-			</controls:ComboBoxWithContent.ComboBoxItemTemplate>
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition />
+			</Grid.RowDefinitions>
 
-			<controls:ComboBoxWithContent.ContentTemplate>
-				<DataTemplate>
-					<views:DocumentView
-						Grid.Row="1"
-						Margin="3"
-						FilePath="{Binding MdlPath}"
-						Header="None" />
-				</DataTemplate>
-			</controls:ComboBoxWithContent.ContentTemplate>
+			<views:DocumentView Grid.Row="0" FilePath="{Binding Model.ImcFilePath}" />
 
-		</controls:ComboBoxWithContent>
+			<controls:ComboBoxWithContent
+				Grid.Row="1"
+				Hint="Race"
+				ItemsSource="{Binding AvailableRaces}"
+				SelectedItem="{Binding SelectedRace}">
+				<controls:ComboBoxWithContent.ComboBoxItemTemplate>
+					<DataTemplate>
+						<TextBlock Text="{Binding Name}" />
+					</DataTemplate>
+				</controls:ComboBoxWithContent.ComboBoxItemTemplate>
+
+				<controls:ComboBoxWithContent.ContentTemplate>
+					<DataTemplate>
+						<views:DocumentView
+							Grid.Row="1"
+							Margin="3"
+							FilePath="{Binding MdlPath}" />
+					</DataTemplate>
+				</controls:ComboBoxWithContent.ContentTemplate>
+
+			</controls:ComboBoxWithContent>
+		</Grid>
 	</Grid>
 </UserControl>
