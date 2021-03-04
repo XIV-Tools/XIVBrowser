@@ -19,6 +19,9 @@ namespace XIVBrowser
 			LogService.Create();
 
 			this.MainWindow = StyledWindow.Show<MainView>();
+			this.MainWindow.SizeToContent = SizeToContent.Manual;
+			this.MainWindow.Width = 1024;
+			this.MainWindow.Height = 720;
 
 			base.OnStartup(e);
 		}

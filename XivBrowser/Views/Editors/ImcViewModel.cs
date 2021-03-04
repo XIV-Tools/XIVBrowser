@@ -29,6 +29,8 @@ namespace XivBrowser.Views.Editors
 			ItemSlots.Wrists,
 			ItemSlots.RightRing,
 			ItemSlots.LeftRing,
+
+			ItemSlots.Weapons,
 		};
 
 		public ItemSlots Slot
@@ -86,7 +88,12 @@ namespace XivBrowser.Views.Editors
 
 		private void UpdateMaterialId()
 		{
+			this.MaterialKey = string.Empty;
+
 			if (this.File == null)
+				return;
+
+			if (this.variant == 0)
 				return;
 
 			if (!this.ValidSlots.Contains(this.Slot))
@@ -98,7 +105,7 @@ namespace XivBrowser.Views.Editors
 			ImcFile.ImageChangeData imageChangeData;
 			if (this.File.TryGetVariant(this.Slot, this.Variant, out imageChangeData))
 			{
-				this.MaterialKey = "v" + (imageChangeData.MaterialId - 1).ToString().PadLeft(4, '0');
+				this.MaterialKey = imageChangeData.GetMaterialKey();
 			}
 			else
 			{

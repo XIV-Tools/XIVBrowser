@@ -47,6 +47,11 @@ namespace XIVBrowser.Views
 				category.Children.Add(new ItemTreeEntry(item));
 			}
 
+			foreach (TreeEntry cat in categoryLookup.Values)
+			{
+				cat.Sort();
+			}
+
 			this.Items = new ObservableCollection<TreeEntry>(categoryLookup.Values);
 		}
 
@@ -70,9 +75,8 @@ namespace XIVBrowser.Views
 			public ItemTreeEntry(ItemEx item)
 			{
 				this.Item = item;
+				this.Name = item.Name;
 			}
-
-			public new string Name => this.Item.Name;
 		}
 
 		public class TreeEntry : INotifyPropertyChanged
@@ -85,7 +89,23 @@ namespace XIVBrowser.Views
 			public event PropertyChangedEventHandler? PropertyChanged;
 
 			public List<TreeEntry> Children { get; set; }
-			public string? Name { get; set; }
+			public virtual string? Name { get; set; }
+
+			public void Sort()
+			{
+				this.Children.Sort((l, r) =>
+				{
+					if (l.Name == null)
+						return 0;
+
+					return l.Name.CompareTo(r.Name);
+				});
+
+				foreach (TreeEntry child in this.Children)
+				{
+					child.Sort();
+				}
+			}
 		}
 	}
 }

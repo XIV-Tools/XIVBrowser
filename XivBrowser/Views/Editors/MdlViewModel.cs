@@ -8,11 +8,12 @@ namespace XivBrowser.Views.Editors
 	using System.IO;
 	using System.Linq;
 	using System.Windows;
+	using Lumina.Data.Files;
 	using LuminaExtensions.Files;
 
 	public class MdlViewModel : DocumentViewModel<MdlFile, MdlView>
 	{
-		public byte? MaterialSetId { get; set; }
+		public string? MaterialSetKey { get; set; }
 		public ObservableCollection<MaterialOption> Materials { get; set; } = new ObservableCollection<MaterialOption>();
 		public MaterialOption? SelectedMaterial { get; set; }
 
@@ -37,7 +38,7 @@ namespace XivBrowser.Views.Editors
 			ItemModelView? itemModelView = this.View?.FindParent<ItemModelView>();
 			if (itemModelView != null)
 			{
-				this.MaterialSetId = itemModelView.ImageChangeVariant?.MaterialId;
+				this.MaterialSetKey = itemModelView.ImageChangeVariant?.GetMaterialKey();
 			}
 			else
 			{
@@ -51,9 +52,7 @@ namespace XivBrowser.Views.Editors
 
 			string dir = this.Document.Directory;
 			dir = dir.Replace("model", "material");
-			string? str = (this.MaterialSetId - 1).ToString();
-			string matKey = "v" + str!.PadLeft(4, '0');
-			dir = dir + "/" + matKey;
+			dir = dir + "/" + this.MaterialSetKey;
 
 			foreach (string materialPath in this.File.Materials)
 			{

@@ -88,20 +88,33 @@ namespace XivBrowser.Views
 			if (this.ImcFile == null || this.Model == null || this.Slot == ItemSlots.None)
 				return;
 
-			this.ImageChangeVariant = this.ImcFile.GetVariant(this.Slot, this.Model.ImcVariant);
+			this.ImageChangeVariant = null;
+			ImcFile.ImageChangeData data;
+			if (!this.ImcFile.TryGetVariant(this.Slot, this.Model.ImcVariant, out data))
+				return;
 
-			// Check every possible race/type if it produces a valid model path.
-			Array allRaces = Enum.GetValues(typeof(RaceTribes));
-			Array? allRaceTypes = Enum.GetValues(typeof(RaceTypes));
-			foreach (RaceTribes race in allRaces)
+			this.ImageChangeVariant = data;
+
+			if (this.Model is WeaponModel)
 			{
-				foreach (RaceTypes type in allRaceTypes)
+				string path = this.Model.GetModelPath(RaceTribes.HyurMidlanderMale, RaceTypes.Player, this.Slot);
+				this.AvailableRaces.Add(new AvailableRace("All", path));
+			}
+			else
+			{
+				// Check every possible race/type if it produces a valid model path.
+				Array allRaces = Enum.GetValues(typeof(RaceTribes));
+				Array? allRaceTypes = Enum.GetValues(typeof(RaceTypes));
+				foreach (RaceTribes race in allRaces)
 				{
-					string path = this.Model.GetModelPath(race, type, this.Slot);
-					if (LuminaService.Lumina.FileExists(path))
+					foreach (RaceTypes type in allRaceTypes)
 					{
-						AvailableRace option = new AvailableRace(race, type, path);
-						this.AvailableRaces.Add(option);
+						string path = this.Model.GetModelPath(race, type, this.Slot);
+						if (LuminaService.Lumina.FileExists(path))
+						{
+							AvailableRace option = new AvailableRace(race, type, path);
+							this.AvailableRaces.Add(option);
+						}
 					}
 				}
 			}
@@ -124,10 +137,16 @@ namespace XivBrowser.Views
 				this.MdlPath = path;
 			}
 
+			public AvailableRace(string name, string path)
+			{
+				this.Name = name + " - " + Path.GetFileName(path);
+				this.MdlPath = path;
+			}
+
 			public string Name { get; set; }
-			public string Key { get; set; }
-			public RaceTribes Race { get; set; }
-			public RaceTypes Type { get; set; }
+			public string? Key { get; set; }
+			public RaceTribes? Race { get; set; }
+			public RaceTypes? Type { get; set; }
 			public string MdlPath { get; set; }
 		}
 	}
