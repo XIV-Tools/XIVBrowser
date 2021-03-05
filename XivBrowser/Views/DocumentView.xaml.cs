@@ -149,7 +149,7 @@ namespace XivBrowser.Views
 				{
 					filterBuilder.Append("|");
 					filterBuilder.Append(converter.Name);
-					filterBuilder.Append("|*.");
+					filterBuilder.Append("|*");
 					filterBuilder.Append(converter.FileExtension);
 				}
 
