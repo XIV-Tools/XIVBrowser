@@ -11,7 +11,22 @@
 	mc:Ignorable="d">
 	<Grid>
 
-		<ItemsControl Margin="6" ItemsSource="{Binding File.TexturePaths}">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
+
+		<ItemsControl Grid.Row="0" Margin="6" ItemsSource="{Binding File.ColorSetPathList}">
+			<ItemsControl.ItemTemplate>
+				<DataTemplate>
+					<TextBlock
+						Margin="3"
+						Text="{Binding Path=.}"/>
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+		</ItemsControl>
+
+		<ItemsControl Grid.Row="1" Margin="6" ItemsSource="{Binding File.TexturePaths}">
 			<ItemsControl.ItemsPanel>
 				<ItemsPanelTemplate>
 					<WrapPanel Orientation="Horizontal" />
