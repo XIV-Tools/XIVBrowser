@@ -14,20 +14,7 @@
 
 	<Grid>
 
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" />
-			<RowDefinition />
-		</Grid.RowDefinitions>
-
-		<StackPanel Grid.Row="0" Orientation="Vertical">
-			<TextBlock Text="{Binding File.Attributes, Converter={StaticResource ListToStringConverter}, StringFormat=Attributes: {0}}" />
-			<TextBlock Text="{Binding File.Bones, Converter={StaticResource ListToStringConverter}, StringFormat=Bones: {0}}" />
-			<TextBlock Text="{Binding File.Shapes, Converter={StaticResource ListToStringConverter}, StringFormat=Shapes: {0}}" />
-			<TextBlock Text="{Binding File.ExtraPaths, Converter={StaticResource ListToStringConverter}, StringFormat=Extra Paths: {0}}" />
-		</StackPanel>
-
 		<controls:ComboBoxWithContent
-			Grid.Row="1"
 			Hint="Material"
 			ItemsSource="{Binding Materials}"
 			SelectedItem="{Binding SelectedMaterial}">
